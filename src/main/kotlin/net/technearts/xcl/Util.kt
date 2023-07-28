@@ -17,10 +17,11 @@ fun outStream(output: File?): Writer {
 fun repl(input: Reader, output: Writer, tab: String, cell: String) {
     BufferedWriter(output).use { writer ->
         BufferedReader(input).use { reader ->
-            writer.write(reader.readLine())
+            reader.lines().forEach(writer::appendLine)
         }
     }
 }
+
 
 fun Reader.string(): String {
     while (true) {
