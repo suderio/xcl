@@ -1,15 +1,27 @@
 package net.technearts.xcl
 
-import java.io.BufferedReader
-import java.io.InputStreamReader
-import java.io.Reader
-import java.io.StringReader
+import java.io.*
 
-fun inPiper(input: String?): Reader {
+fun inStream(input: File?): Reader {
     if (input != null)
-        return StringReader(input)
+        return FileReader(input)
     return InputStreamReader(System.`in`)
 }
+
+fun outStream(output: File?): Writer {
+    if (output != null)
+        return FileWriter(output)
+    return OutputStreamWriter(System.out);
+}
+
+fun repl(input: Reader, output: Writer, tab: String, cell: String) {
+    BufferedWriter(output).use { writer ->
+        BufferedReader(input).use { reader ->
+            reader.lines().forEach(writer::appendLine)
+        }
+    }
+}
+
 
 fun Reader.string(): String {
     while (true) {

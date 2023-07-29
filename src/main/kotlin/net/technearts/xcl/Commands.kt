@@ -3,7 +3,6 @@ package net.technearts.xcl
 import io.quarkus.arc.log.LoggerName
 import io.quarkus.picocli.runtime.annotations.TopCommand
 import picocli.CommandLine.*
-import java.lang.System.out
 import org.jboss.logging.Logger
 import java.io.File
 
@@ -24,17 +23,27 @@ class Read : Runnable {
     @Option(names = ["-c", "--cell"], description = ["Starting cell"], defaultValue = "A1")
     var cell: String = "A1"
 
+    @Option(names = ["-i", "--in"], description = ["input file"])
+    var inputFile: File? = null
+
     @Option(names = ["-o", "--out"], description = ["output file"])
     var outputFile: File? = null
 
-    @Parameters(paramLabel = "input", description = ["Your input"], arity="0..1")
-    var input: String? = null
+    @Option(names = ["--head"], description = ["Reads only the first lines of input", "or (if negative) skips the initial lines"], defaultValue = "0")
+    var head: Int = 0
+
+    @Option(names = ["--tail"], description = ["Reads only the last lines of input", "or (if negative) skips the final lines"], defaultValue = "0")
+    var tail: Int = 0
+
+    @Parameters(paramLabel = "columns", description = ["Your output columns"], arity="0..*")
+    var columns : List<String>? = null
 
     override fun run() {
         log.info("tab: $tab")
         log.info("cell: $cell")
+        log.info("input file: ${inputFile?:"stdin"}")
         log.info("output file: ${outputFile?:"stdout"}")
-        out.printf("%s", inPiper(input).string())
+        repl(inStream(inputFile), outStream(outputFile), tab, cell)
     }
 }
 
