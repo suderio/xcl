@@ -2,26 +2,32 @@ package net.technearts.xcl
 
 import io.quarkus.arc.log.LoggerName
 import io.quarkus.picocli.runtime.annotations.TopCommand
-import picocli.CommandLine.*
+import org.eclipse.microprofile.config.inject.ConfigProperty
 import org.jboss.logging.Logger
+import picocli.CommandLine.*
 import java.io.File
 
 /**
  * xcl << file.xlsx
  * outputs the content of the first tab as csv
  */
+
 @TopCommand
-@Command(name = "xcl", mixinStandardHelpOptions = true, subcommands = [Create::class, Update::class])
+@Command(
+    name = "xcl",
+    mixinStandardHelpOptions = true,
+    description = ["Reads one sheet of an excel file and outputs as a CSV.", "This is the default command."]
+)
 class Read : Runnable {
 
     @LoggerName("xcl")
     lateinit var log: Logger
 
     @Option(names = ["-t", "--tab"], description = ["Name of the tab"], defaultValue = "tab1")
-    var tab: String = "tab1"
+    lateinit var tab: String
 
     @Option(names = ["-c", "--cell"], description = ["Starting cell"], defaultValue = "A1")
-    var cell: String = "A1"
+    lateinit var cell: String
 
     @Option(names = ["-i", "--in"], description = ["input file"])
     var inputFile: File? = null
@@ -29,21 +35,49 @@ class Read : Runnable {
     @Option(names = ["-o", "--out"], description = ["output file"])
     var outputFile: File? = null
 
-    @Option(names = ["--head"], description = ["Reads only the first lines of input", "or (if negative) skips the initial lines"], defaultValue = "0")
+    @Option(
+        names = ["--head"],
+        description = ["Reads only the first lines of input", "or (if negative) skips the initial lines"],
+        defaultValue = "0"
+    )
     var head: Int = 0
 
-    @Option(names = ["--tail"], description = ["Reads only the last lines of input", "or (if negative) skips the final lines"], defaultValue = "0")
+    @Option(
+        names = ["--tail"],
+        description = ["Reads only the last lines of input", "or (if negative) skips the final lines"],
+        defaultValue = "0"
+    )
     var tail: Int = 0
 
-    @Parameters(paramLabel = "columns", description = ["Your output columns"], arity="0..*")
-    var columns : List<String>? = null
+    @Parameters(paramLabel = "columns", description = ["Your output columns"], arity = "0..*")
+    var columns: List<String>? = null
+
+    @ConfigProperty(name = "xcl.FS", defaultValue = "\u00F1")
+    lateinit var FS: String
+
+    @ConfigProperty(name = "xcl.LF", defaultValue = "\u000A")
+    lateinit var LF: String
 
     override fun run() {
         log.info("tab: $tab")
         log.info("cell: $cell")
-        log.info("input file: ${inputFile?:"stdin"}")
-        log.info("output file: ${outputFile?:"stdout"}")
-        repl(inStream(inputFile), outStream(outputFile), tab, cell)
+        log.info("input file: ${inputFile ?: "stdin"}")
+        log.info("output file: ${outputFile ?: "stdout"}")
+        repl(inWorkbookStream(inputFile, tab), outCSVStream(outputFile))
+    }
+
+    @Command()
+    fun read() {
+
+    }
+
+    @Command()
+    fun create() {
+        log.info("tab: $tab")
+        log.info("cell: $cell")
+        log.info("input file: ${inputFile ?: "stdin"}")
+        log.info("output file: ${outputFile ?: "stdout"}")
+        repl(inCSVStream(inputFile), outWorkbookStream(outputFile, tab))
     }
 }
 
@@ -52,10 +86,46 @@ class Read : Runnable {
  * cat file.csv | xcl create --template template.xsl --line-separator="\n" \
  * --field-separator="," --cell=B1 --tab=tab02 >> result.xls
  */
-@Command(name = "create", mixinStandardHelpOptions = true)
+@Command(name = "create", mixinStandardHelpOptions = true, description = ["Creates a new excel file from the input"])
 class Create : Runnable {
+    @LoggerName("xcl")
+    lateinit var log: Logger
+    @Option(names = ["-t", "--tab"], description = ["Name of the tab"], defaultValue = "tab1")
+    lateinit var tab: String
+
+    @Option(names = ["-c", "--cell"], description = ["Starting cell"], defaultValue = "A1")
+    lateinit var cell: String
+
+    @Option(names = ["-i", "--in"], description = ["input file"])
+    var inputFile: File? = null
+
+    @Option(names = ["-o", "--out"], description = ["output file"])
+    var outputFile: File? = null
+
+    @Option(
+        names = ["--head"],
+        description = ["Reads only the first lines of input", "or (if negative) skips the initial lines"],
+        defaultValue = "0"
+    )
+    var head: Int = 0
+
+    @Option(
+        names = ["--tail"],
+        description = ["Reads only the last lines of input", "or (if negative) skips the final lines"],
+        defaultValue = "0"
+    )
+    var tail: Int = 0
+
+    @Parameters(paramLabel = "columns", description = ["Your output columns"], arity = "0..*")
+    var columns: List<String>? = null
+
+    @ConfigProperty(name = "xcl.FS", defaultValue = "\u00F1")
+    lateinit var FS: String
+
+    @ConfigProperty(name = "xcl.LF", defaultValue = "\u000A")
+    lateinit var LF: String
     override fun run() {
-        TODO("Not yet implemented")
+
     }
 
 }
@@ -64,11 +134,11 @@ class Create : Runnable {
  *
  * cat file.csv | xcl create --template template.xsl --line-separator="\n" \
  * --field-separator="," --cell=B1 --tab=tab02 >> result.xls
- */
+ *
 @Command(name = "update", mixinStandardHelpOptions = true)
 class Update : Runnable {
-    override fun run() {
-        TODO("Not yet implemented")
-    }
-
+override fun run() {
+TODO("Not yet implemented")
 }
+}
+ */

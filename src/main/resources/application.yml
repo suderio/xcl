@@ -1,2 +1,10 @@
-greeting:
-  message: "hello"
+xcl:
+  FS: "\u00F1"
+  LF: "\u000A"
+
+
+quarkus:
+  native:
+    container-build: true
+    compression:
+      level: 6
