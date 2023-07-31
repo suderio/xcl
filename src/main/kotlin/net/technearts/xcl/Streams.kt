@@ -1,117 +1,86 @@
 package net.technearts.xcl
 
-import io.quarkus.arc.log.LoggerName
-import org.apache.poi.xssf.usermodel.XSSFWorkbook
-import org.jboss.logging.Logger
+import org.dhatim.fastexcel.reader.CellType
+import org.dhatim.fastexcel.reader.ReadableWorkbook
 import java.io.*
+import java.util.function.Consumer
+import java.util.stream.Stream
+import kotlin.streams.asSequence
 
 const val FS = '\u00F1'
 const val LF = '\u000A'
 
-fun inWorkbookStream(input: File?, tab: String): Reader = WorkbookReader(input?.inputStream() ?: System.`in`, tab)
+fun repl(input: Sequence<XCLCell<*>>, output: CellConsumer) {
+    output.use { w ->
+        input.forEach { w.accept(it) }
+    }
+}
 
-fun outCSVStream(output: File?): Writer = CSVWriter(output?.outputStream() ?: System.out)
+data class XCLCell<T>(val row: Int, val col: Int, val type: XCLCellType, val value: T)
+enum class XCLCellType { NUMBER, STRING, DATE, FORMULA, ERROR, BOOLEAN, EMPTY }
 
-fun inCSVStream(input: File?): Reader = CSVReader(input?.inputStream() ?: System.`in`)
+interface CellConsumer : Consumer<XCLCell<*>>, Closeable
+fun inStream(input: File?, tab: String): Sequence<XCLCell<*>> {
+    return WorkbookStream(input?.inputStream() ?: System.`in`, tab).stream().asSequence()
+}
 
-fun outWorkbookStream(output: File?, tab: String): Writer = WorkbookWriter(output?.outputStream() ?: System.out, tab)
-fun repl(input: Reader, output: Writer) {
-    BufferedWriter(output).use { writer ->
-        BufferedReader(input).use { reader ->
-            reader.lines().forEach {
-                writer.append(it)
-                writer.newLine()
+fun outStream(output: File?): CellConsumer {
+    return CSVWrite(output?.outputStream() ?: System.out)
+}
+
+class CSVWrite(stream: OutputStream) : FilterWriter(BufferedWriter(OutputStreamWriter(stream))), CellConsumer {
+    override fun accept(cell: XCLCell<*>) {
+        if (cell.col == 0) {
+            if (cell.row != 0)
+                this.append('\u0008').write("\n")
+        }
+        this.append(cell.value.toString()).write(",")
+    }
+
+}
+class WorkbookStream(stream: InputStream, tab: String) {
+    private val workbook = ReadableWorkbook(BufferedInputStream(stream))
+    private val sheet = workbook.findSheet(tab)
+
+    fun stream(): Stream<XCLCell<*>> = if (sheet.isPresent) {
+        sheet.get().openStream().flatMap { rows ->
+            rows.stream().map { cell ->
+                when (cell.type) {
+                    CellType.NUMBER -> XCLCell(
+                        cell.address.row,
+                        cell.address.column,
+                        XCLCellType.NUMBER,
+                        cell.asNumber()
+                    )
+
+                    CellType.STRING -> XCLCell(
+                        cell.address.row,
+                        cell.address.column,
+                        XCLCellType.STRING,
+                        cell.asString()
+                    )
+
+                    CellType.FORMULA -> XCLCell(
+                        cell.address.row,
+                        cell.address.column,
+                        XCLCellType.FORMULA,
+                        cell.formula
+                    )
+
+                    CellType.ERROR -> XCLCell(cell.address.row, cell.address.column, XCLCellType.ERROR, cell.rawValue)
+                    CellType.BOOLEAN -> XCLCell(
+                        cell.address.row,
+                        cell.address.column,
+                        XCLCellType.BOOLEAN,
+                        cell.asBoolean()
+                    )
+
+                    CellType.EMPTY -> XCLCell(cell.address.row, cell.address.column, XCLCellType.EMPTY, "")
+                    else -> XCLCell(cell.address.row, cell.address.column, XCLCellType.ERROR, "")
+                }
             }
         }
+    } else {
+        Stream.empty()
     }
 }
-
-class WorkbookReader(
-    stream: InputStream, tab: String
-) : FilterReader(InputStreamReader(stream)) {
-    private val workbook = XSSFWorkbook(stream)
-    private val sheet = workbook.getSheet(tab)
-    private val iterator = CellIterator(sheet)
-
-    @LoggerName("xcl")
-    lateinit var log: Logger
-    override fun read(p0: CharArray, p1: Int, p2: Int): Int {
-        return if (iterator.hasNext()) {
-            val s = "${iterator.next().getCellValue()}${if (iterator.endOfLine()) LF else FS}"
-            if (s.length > p2)
-                log.error("Error in the WorkbookReader buffer.\nReading ($s)\nMax ($p2)")
-            s.reader().read(p0, p1, p2)
-        } else {
-            -1
-        }
-    }
-
-    override fun close() {
-        workbook.close()
-    }
-
-}
-
-class WorkbookWriter(
-    private val stream: OutputStream,
-    tab: String,
-    private val fieldSeparator: Char = ',',
-    private val lineSeparator: Char = '\n'
-) : FilterWriter(OutputStreamWriter(stream)) {
-    private val workbook = XSSFWorkbook()
-    private val sheet = workbook.createSheet(tab)
-
-    override fun close() {
-        workbook.close()
-        super.close()
-    }
-
-    override fun flush() {
-        workbook.write(stream)
-        super.flush()
-    }
-
-    override fun write(p0: CharArray, p1: Int, p2: Int) {
-        TODO()
-    }
-
-}
-
-class CSVReader(
-    stream: InputStream,
-    private val fieldSeparator: Char = ',',
-    private val lineSeparator: Char = '\n'
-) : FilterReader(InputStreamReader(stream)) {
-    override fun read(p0: CharArray, p1: Int, p2: Int): Int {
-        return this.`in`.read(separator(p0), p1, p2)
-    }
-
-    private fun separator(p0: CharArray) =
-        p0.map {
-            when (it) {
-                fieldSeparator -> FS
-                lineSeparator -> LF
-                else -> it
-            }
-        }.toCharArray()
-}
-
-class CSVWriter(
-    stream: OutputStream,
-    private val fieldSeparator: Char = ',',
-    private val lineSeparator: Char = '\n'
-) : FilterWriter(OutputStreamWriter(stream)) {
-    override fun write(p0: CharArray, p1: Int, p2: Int) {
-        this.out.write(separators(p0), p1, p2)
-    }
-
-    private fun separators(p0: CharArray) =
-        p0.map {
-            when (it) {
-                FS -> fieldSeparator
-                LF -> lineSeparator
-                else -> it
-            }
-        }.toCharArray()
-}
-

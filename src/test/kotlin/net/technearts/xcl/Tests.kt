@@ -17,8 +17,9 @@ class ReplTest {
     fun testReadRepl() {
         val file = getTestResources("read.xlsx")
         val tempFile = Files.createTempFile("temp", "txt")
-        println("Using $file.absolutePath")
-        repl(inWorkbookStream(file, "Planilha1"), outCSVStream(tempFile.toFile()))
+        println("Using ${file.absolutePath}")
+        println("Writing $tempFile")
+        repl(inStream(file, "Planilha1"), outStream(tempFile.toFile()))
         val result = Files.readString(tempFile.toAbsolutePath())
         print(result)
         assert(result.startsWith("A,B,C"))

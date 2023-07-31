@@ -1,6 +1,8 @@
 package net.technearts.xcl
 
 import org.dhatim.fastexcel.Workbook
+import org.dhatim.fastexcel.reader.Cell
+import org.dhatim.fastexcel.reader.CellType.*
 import org.dhatim.fastexcel.reader.ReadableWorkbook
 import java.io.InputStream
 import java.io.OutputStream
@@ -26,4 +28,17 @@ fun write(output: OutputStream, tab: String) {
     ws.value(0, 0, 0)
     ws.value(0, 1, "1")
     ws.value(0, 2, LocalDate.now())
+}
+
+fun Cell.value(): Any {
+    return when (this.type) {
+        BOOLEAN -> this.asBoolean()
+        NUMBER -> this.asNumber()
+        STRING -> this.asString()
+        FORMULA -> this.formula
+        ERROR -> this.value
+        EMPTY -> ""
+        else -> ""
+    }
+    TODO("Tratar Date")
 }

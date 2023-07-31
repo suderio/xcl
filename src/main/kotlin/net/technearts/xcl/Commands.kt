@@ -8,7 +8,7 @@ import picocli.CommandLine.*
 import java.io.File
 
 /**
- * xcl << file.xlsx
+ * cat file.xlsx | xcl
  * outputs the content of the first tab as csv
  */
 
@@ -63,21 +63,7 @@ class Read : Runnable {
         log.info("cell: $cell")
         log.info("input file: ${inputFile ?: "stdin"}")
         log.info("output file: ${outputFile ?: "stdout"}")
-        repl(inWorkbookStream(inputFile, tab), outCSVStream(outputFile))
-    }
-
-    @Command()
-    fun read() {
-
-    }
-
-    @Command()
-    fun create() {
-        log.info("tab: $tab")
-        log.info("cell: $cell")
-        log.info("input file: ${inputFile ?: "stdin"}")
-        log.info("output file: ${outputFile ?: "stdout"}")
-        repl(inCSVStream(inputFile), outWorkbookStream(outputFile, tab))
+        repl(inStream(inputFile, tab), outStream(outputFile))
     }
 }
 
