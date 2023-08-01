@@ -1,2 +1,5 @@
-greeting:
-  message: "hello"
+quarkus:
+  native:
+    container-build: true
+    compression:
+      level: 6

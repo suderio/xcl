@@ -1,0 +1,3520 @@
+[{
+  "name": "com.microsoft.schemas.office.office.impl.CTShapeLayoutImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "com.microsoft.schemas.vml.impl.CTShapeImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "com.microsoft.schemas.vml.impl.CTShapetypeImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": []
+    }
+  ]
+},
+{
+  "name": "com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": []
+    }
+  ]
+},
+{
+  "name": "com.sun.org.apache.xerces.internal.jaxp.SAXParserFactoryImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": []
+    }
+  ]
+},
+{
+  "name": "com.sun.org.apache.xerces.internal.jaxp.datatype.DatatypeFactoryImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": []
+    }
+  ]
+},
+{
+  "name": "com.sun.xml.internal.stream.XMLInputFactoryImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": []
+    }
+  ]
+},
+{
+  "name": "org.apache.commons.compress.archivers.zip.AsiExtraField",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": []
+    }
+  ]
+},
+{
+  "name": "org.apache.commons.compress.archivers.zip.JarMarker",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": []
+    }
+  ]
+},
+{
+  "name": "org.apache.commons.compress.archivers.zip.ResourceAlignmentExtraField",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": []
+    }
+  ]
+},
+{
+  "name": "org.apache.commons.compress.archivers.zip.UnicodeCommentExtraField",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": []
+    }
+  ]
+},
+{
+  "name": "org.apache.commons.compress.archivers.zip.UnicodePathExtraField",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": []
+    }
+  ]
+},
+{
+  "name": "org.apache.commons.compress.archivers.zip.X000A_NTFS",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": []
+    }
+  ]
+},
+{
+  "name": "org.apache.commons.compress.archivers.zip.X0014_X509Certificates",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": []
+    }
+  ]
+},
+{
+  "name": "org.apache.commons.compress.archivers.zip.X0015_CertificateIdForFile",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": []
+    }
+  ]
+},
+{
+  "name": "org.apache.commons.compress.archivers.zip.X0016_CertificateIdForCentralDirectory",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": []
+    }
+  ]
+},
+{
+  "name": "org.apache.commons.compress.archivers.zip.X0017_StrongEncryptionHeader",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": []
+    }
+  ]
+},
+{
+  "name": "org.apache.commons.compress.archivers.zip.X0019_EncryptionRecipientCertificateList",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": []
+    }
+  ]
+},
+{
+  "name": "org.apache.commons.compress.archivers.zip.X5455_ExtendedTimestamp",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": []
+    }
+  ]
+},
+{
+  "name": "org.apache.commons.compress.archivers.zip.X7875_NewUnix",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": []
+    }
+  ]
+},
+{
+  "name": "org.apache.commons.compress.archivers.zip.Zip64ExtendedInformationExtraField",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": []
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.ArrayRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "queriedMethods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.AutoFilterInfoRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.BOFRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.BackupRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.BlankRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.BookBoolRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.BoolErrRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "queriedMethods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.BottomMarginRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.BoundSheetRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.CFHeader12Record",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "queriedMethods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.CFHeaderRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.CFRule12Record",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "queriedMethods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.CFRuleRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.CRNCountRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.CRNRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.CalcCountRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.CalcModeRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.CodepageRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.ColumnInfoRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.ContinueRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.CountryRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.DBCellRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.DConRefRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "queriedMethods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.DSFRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.DVALRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.DVRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.DateWindow1904Record",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.DefaultColWidthRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.DefaultRowHeightRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.DeltaRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.DimensionsRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.DrawingGroupRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.DrawingRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.DrawingSelectionRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "queriedMethods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.EOFRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.ExtSSTRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.ExtendedFormatRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.ExternSheetRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.ExternalNameRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "queriedMethods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.FeatHdrRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.FeatRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "queriedMethods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.FilePassRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.FileSharingRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "queriedMethods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.FnGroupCountRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.FontRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.FooterRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.FormatRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.FormulaRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.GridsetRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.GutsRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.HCenterRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.HeaderFooterRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.HeaderRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.HideObjRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.HorizontalPageBreakRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.HyperlinkRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.IndexRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.InterfaceEndRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "create",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.InterfaceHdrRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.IterationRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.LabelRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.LabelSSTRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.LeftMarginRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.MMSRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.MergeCellsRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.MulBlankRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.MulRKRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.NameCommentRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "queriedMethods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.NameRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.NoteRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.NumberRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.ObjRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.ObjectProtectRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "queriedMethods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.PaletteRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.PaneRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.PasswordRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.PasswordRev4Record",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.PrecisionRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.PrintGridlinesRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.PrintHeadersRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.PrintSetupRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.ProtectRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.ProtectionRev4Record",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.RKRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.RecalcIdRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.RefModeRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.RefreshAllRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.RightMarginRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.RowRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.SSTRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.SaveRecalcRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.ScenarioProtectRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "queriedMethods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.SelectionRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.SharedFormulaRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.StringRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "queriedMethods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.StyleRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.SupBookRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.TabIdRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.TableRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "queriedMethods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.TableStylesRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.TextObjectRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.TopMarginRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.UncalcedRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "queriedMethods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.UseSelFSRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.UserSViewBegin",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "queriedMethods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.UserSViewEnd",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "queriedMethods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.VCenterRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.VerticalPageBreakRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "queriedMethods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.WSBoolRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.WindowOneRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.WindowProtectRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.WindowTwoRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.WriteAccessRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.WriteProtectRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "queriedMethods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.chart.BeginRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "queriedMethods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.chart.CatLabRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "queriedMethods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.chart.ChartEndBlockRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "queriedMethods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.chart.ChartEndObjectRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "queriedMethods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.chart.ChartFRTInfoRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "queriedMethods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.chart.ChartRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "queriedMethods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.chart.ChartStartBlockRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "queriedMethods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.chart.ChartStartObjectRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "queriedMethods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.chart.ChartTitleFormatRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "queriedMethods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.chart.DataFormatRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "queriedMethods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.chart.EndRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "queriedMethods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.chart.LegendRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "queriedMethods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.chart.LinkedDataRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "queriedMethods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.chart.SeriesRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "queriedMethods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.chart.SeriesTextRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "queriedMethods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.chart.SeriesToChartGroupRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "queriedMethods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.chart.ValueRangeRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "queriedMethods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.pivottable.DataItemRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "queriedMethods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.pivottable.ExtendedPivotTableViewFieldsRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "queriedMethods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.pivottable.PageItemRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "queriedMethods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.pivottable.StreamIDRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "queriedMethods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.pivottable.ViewDefinitionRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "queriedMethods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.pivottable.ViewFieldsRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "queriedMethods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.record.pivottable.ViewSourceRecord",
+  "fields": [
+    {
+      "name": "sid"
+    }
+  ],
+  "queriedMethods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.poi.hssf.record.RecordInputStream"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.hssf.usermodel.HSSFWorkbookFactory"
+},
+{
+  "name": "org.apache.poi.poifs.crypt.cryptoapi.CryptoAPIEncryptionInfoBuilder",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": []
+    }
+  ]
+},
+{
+  "name": "org.apache.poi.xssf.usermodel.XSSFWorkbookFactory"
+},
+{
+  "name": "org.apache.tika.detect.OverrideDetector",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": []
+    }
+  ]
+},
+{
+  "name": "org.apache.xmlbeans.impl.schema.BuiltinSchemaTypeSystem",
+  "methods": [
+    {
+      "name": "get",
+      "parameterTypes": []
+    },
+    {
+      "name": "getNoType",
+      "parameterTypes": []
+    }
+  ]
+},
+{
+  "name": "org.apache.xmlbeans.impl.schema.PathResourceLoader",
+  "queriedMethods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "java.io.File[]"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.xmlbeans.impl.schema.SchemaTypeLoaderImpl",
+  "methods": [
+    {
+      "name": "build",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaTypeLoader[]",
+        "org.apache.xmlbeans.ResourceLoader",
+        "java.lang.ClassLoader"
+      ]
+    },
+    {
+      "name": "getContextTypeLoader",
+      "parameterTypes": []
+    }
+  ]
+},
+{
+  "name": "org.apache.xmlbeans.impl.schema.SchemaTypeSystemCompiler",
+  "queriedMethods": [
+    {
+      "name": "compile",
+      "parameterTypes": [
+        "java.lang.String",
+        "org.apache.xmlbeans.SchemaTypeSystem",
+        "org.apache.xmlbeans.XmlObject[]",
+        "org.apache.xmlbeans.BindingConfig",
+        "org.apache.xmlbeans.SchemaTypeLoader",
+        "org.apache.xmlbeans.Filer",
+        "org.apache.xmlbeans.XmlOptions"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.xmlbeans.impl.schema.SchemaTypeSystemImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "java.lang.Class"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.xmlbeans.impl.store.Locale",
+  "queriedMethods": [
+    {
+      "name": "nodeToCursor",
+      "parameterTypes": [
+        "org.w3c.dom.Node"
+      ]
+    },
+    {
+      "name": "nodeToXmlObject",
+      "parameterTypes": [
+        "org.w3c.dom.Node"
+      ]
+    },
+    {
+      "name": "nodeToXmlStream",
+      "parameterTypes": [
+        "org.w3c.dom.Node"
+      ]
+    },
+    {
+      "name": "streamToNode",
+      "parameterTypes": [
+        "javax.xml.stream.XMLStreamReader"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.xmlbeans.impl.store.Path",
+  "queriedMethods": [
+    {
+      "name": "compilePath",
+      "parameterTypes": [
+        "java.lang.String",
+        "org.apache.xmlbeans.XmlOptions"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.apache.xmlbeans.impl.store.Query",
+  "queriedMethods": [
+    {
+      "name": "compileQuery",
+      "parameterTypes": [
+        "java.lang.String",
+        "org.apache.xmlbeans.XmlOptions"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.drawingml.x2006.main.impl.ThemeDocumentImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.drawingml.x2006.spreadsheetDrawing.impl.CTDrawingImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.officeDocument.x2006.customProperties.impl.CTPropertiesImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.officeDocument.x2006.customProperties.impl.PropertiesDocumentImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.officeDocument.x2006.extendedProperties.impl.CTPropertiesImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.officeDocument.x2006.extendedProperties.impl.PropertiesDocumentImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.officeDocument.x2006.relationships.impl.STRelationshipIdImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.STCellFormulaType$Enum",
+  "fields": [
+    {
+      "name": "table"
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.STCellType$Enum",
+  "fields": [
+    {
+      "name": "table"
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.STFontScheme$Enum"
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.STPatternType$Enum"
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.STSheetState$Enum",
+  "fields": [
+    {
+      "name": "table"
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTBookViewImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTBookViewsImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTBorderImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTBorderPrImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTBordersImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTCalcChainImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTCellFormulaImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTCellImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTCellStyleXfsImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTCellXfsImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTColImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTColorImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTColorsImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTColsImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTCommentsImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTDefinedNameImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTDefinedNamesImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTDxfImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTDxfsImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTExternalLinkImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTExternalReferenceImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTExternalReferencesImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTFillImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTFillsImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTFontImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTFontNameImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTFontSchemeImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTFontSizeImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTFontsImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTHyperlinkImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTHyperlinksImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTIndexedColorsImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTIntPropertyImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTNumFmtImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTNumFmtsImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTPageMarginsImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTPatternFillImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTREltImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTRPrEltImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTRgbColorImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTRowImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTRstImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTSheetDataImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTSheetDimensionImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTSheetFormatPrImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTSheetImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTSheetViewImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTSheetViewsImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTSheetsImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTSstImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTStylesheetImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTTableStylesImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTWorkbookImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTWorkbookPrImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTWorksheetImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CTXfImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CalcChainDocumentImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.CommentsDocumentImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.ExternalLinkDocumentImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.STBorderIdImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.STCellFormulaTypeImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.STCellRefImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.STCellStyleXfIdImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.STCellTypeImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.STFillIdImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.STFontIdImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.STFontSchemeImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.STNumFmtIdImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.STPatternTypeImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.STRefImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.STSheetStateImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.STUnsignedIntHexImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.STXstringImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.SstDocumentImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.StyleSheetDocumentImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.WorkbookDocumentImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "org.openxmlformats.schemas.spreadsheetml.x2006.main.impl.WorksheetDocumentImpl",
+  "methods": [
+    {
+      "name": "<init>",
+      "parameterTypes": [
+        "org.apache.xmlbeans.SchemaType"
+      ]
+    }
+  ]
+},
+{
+  "name": "schemaorg_apache_xmlbeans.system.sD023D6490046BA0250A839A9AD24C443.TypeSystemHolder",
+  "fields": [
+    {
+      "name": "typeSystem"
+    }
+  ]
+}]
