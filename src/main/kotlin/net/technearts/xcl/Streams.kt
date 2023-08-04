@@ -1,29 +1,47 @@
 package net.technearts.xcl
 
-import io.quarkus.arc.log.LoggerName
-import org.dhatim.fastexcel.VisibilityState
-import org.dhatim.fastexcel.Workbook
-import org.dhatim.fastexcel.reader.CellType.*
-import org.dhatim.fastexcel.reader.ReadableWorkbook
-import org.jboss.logging.Logger
+import bsh.Interpreter
+import net.technearts.xcl.XCLCellType.*
+import org.apache.poi.ss.usermodel.CellType
+import org.apache.poi.ss.usermodel.DateUtil
+import org.apache.poi.ss.usermodel.Row
+import org.apache.poi.xssf.streaming.SXSSFCell
+import org.apache.poi.xssf.streaming.SXSSFRow
+import org.apache.poi.xssf.streaming.SXSSFSheet
+import org.apache.poi.xssf.streaming.SXSSFWorkbook
+import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import java.io.*
+import java.time.LocalDate
 import java.util.function.Consumer
-import java.util.stream.Stream
 import kotlin.streams.asSequence
+
 
 const val FS = '\u00F1'
 const val LF = '\u000A'
 
-fun repl(input: CellProducer, output: CellConsumer) {
+fun repl(input: CellProducer, output: CellConsumer, columns: List<String>) {
+    val engine = Interpreter()
     output.use { writer ->
         input.use { reader ->
-            reader.asSequence().forEach { writer.accept(it) }
+            reader.asSequence().map { xclCell -> columns.columnMapper(xclCell, engine) }.forEach { writer.accept(it) }
         }
     }
 }
 
+fun <T> List<String>.columnMapper(cell: XCLCell<T>, engine: Interpreter): XCLCell<T> {
+    engine.set("__cell__${cell.row}__${cell.col}", cell.value)
+    return if (this.isEmpty()) {
+        cell
+    } else {
+        val expr = this[cell.col].replace("$", "__cell__${cell.row}__")
+        engine.eval("current = $expr")
+        @Suppress("UNCHECKED_CAST")
+        val value: T = engine.get("current") as T
+        XCLCell(cell.row, cell.col, cell.type, value, cell.last)
+    }
+}
 fun inExcelStream(input: File?, tab: String): CellProducer {
-    return WorkbookReader(input?.inputStream() ?: System.`in`, tab)
+    return XSSFWorkbookReader(input?.inputStream() ?: System.`in`, tab)
 }
 
 fun inCSVStream(input: File?): CellProducer {
@@ -35,7 +53,7 @@ fun outCSVStream(output: File?): CellConsumer {
 }
 
 fun outExcelStream(output: File?, tab: String): CellConsumer {
-    return WorkbookWriter(output?.outputStream() ?: System.out, tab)
+    return XSSFWorkbookWriter(output?.outputStream() ?: System.out, tab)
 }
 
 data class XCLCell<T>(val row: Int, val col: Int, val type: XCLCellType, val value: T, val last: Boolean = false)
@@ -50,7 +68,7 @@ class CSVReader(stream: InputStream) : BufferedReader(InputStreamReader(stream))
         return this.lines().asSequence().flatMapIndexed { row: Int, line: String ->
             var col = 0
             line.splitToSequence(",").map { s: String ->
-                XCLCell(row, col++, XCLCellType.STRING, s)
+                XCLCell(row, col++, STRING, s)
                 // TODO Parser heurístico para tentar descobrir o tipo
             }
         }.iterator()
@@ -65,47 +83,74 @@ class CSVWriter(stream: OutputStream) : FilterWriter(BufferedWriter(OutputStream
     }
 }
 
-class WorkbookReader(stream: InputStream, private val tab: String) : BufferedInputStream(stream), CellProducer {
-    private val workbook = ReadableWorkbook(this)
-    private val sheet = workbook.findSheet(tab)
 
-    @LoggerName("xcl")
-    private lateinit var log: Logger
-
+class XSSFWorkbookReader(private val stream: InputStream, tab: String) : CellProducer {
+    private val workbook = XSSFWorkbook(stream)
+    private val sheet = workbook.getSheet(tab)
     override fun iterator(): Iterator<XCLCell<*>> {
-        return if (sheet.isPresent) {
-            sheet.get().openStream().flatMap { row ->
-                row.stream().map { cell ->
-                    val r = cell.address.row
-                    val c = cell.address.column
-                    val last = c == row.cellCount - 1
-                    when (cell.type) {
-                        NUMBER -> XCLCell(r, c, XCLCellType.NUMBER, cell.asNumber(), last)
-                        STRING -> XCLCell(r, c, XCLCellType.STRING, cell.asString(), last)
-                        FORMULA -> XCLCell(r, c, XCLCellType.FORMULA, cell.formula, last)
-                        ERROR -> XCLCell(r, c, XCLCellType.ERROR, cell.rawValue, last)
-                        BOOLEAN -> XCLCell(r, c, XCLCellType.BOOLEAN, cell.asBoolean(), last)
-                        EMPTY -> XCLCell(r, c, XCLCellType.EMPTY, "", last)
-                        else -> XCLCell(r, c, XCLCellType.ERROR, "", last)
+        return sheet.asSequence().flatMap { row ->
+            row.asSequence().map { cell ->
+                val r = cell.rowIndex
+                val c = cell.columnIndex
+                val last = cell.columnIndex == cell.row.count() - 1
+                when (cell.cellType) {
+                    CellType.BLANK -> XCLCell(r, c, EMPTY, "", last)
+                    CellType.NUMERIC -> if (DateUtil.isCellDateFormatted(cell)) {
+                        XCLCell(r, c, DATE, cell.localDateTimeCellValue, last)
+                    } else {
+                        XCLCell(r, c, NUMBER, cell.numericCellValue, last)
                     }
+
+                    CellType.STRING -> XCLCell(r, c, STRING, cell.stringCellValue, last)
+                    CellType.FORMULA -> XCLCell(r, c, FORMULA, cell.cellFormula, last)
+                    CellType.BOOLEAN -> XCLCell(r, c, BOOLEAN, cell.booleanCellValue, last)
+                    CellType.ERROR -> XCLCell(r, c, ERROR, cell.errorCellValue, last)
+                    CellType._NONE -> XCLCell(r, c, EMPTY, "", last)
+                    else -> XCLCell(cell.rowIndex, c, EMPTY, "", last)
                 }
             }
-        } else {
-            log.warn("Excel Tab $tab not found")
-            Stream.empty()
         }.iterator()
     }
+
+    override fun close() {
+        workbook.close()
+        stream.close()
+    }
+
 }
 
-class WorkbookWriter(stream: OutputStream, tab: String) : Workbook(stream, "xcl", "1.0"), CellConsumer {
-    private val sheet = this.newWorksheet(tab)
-
-    init {
-        sheet.keepInActiveTab()
-        sheet.visibilityState = VisibilityState.VISIBLE;
-    }
+class XSSFWorkbookWriter(private val stream: OutputStream, tab: String) : CellConsumer {
+    private val workbook = SXSSFWorkbook()
+    private val sheet = workbook.createSheet(tab)
     override fun accept(cell: XCLCell<*>) {
-        // TODO tratar pelo tipo da cell
-        sheet.value(cell.row, cell.col, cell.value.toString())
+        val c = sheet.row(cell.row).cell(cell.col)
+        when (cell.type) {
+            NUMBER -> c.setCellValue(cell.value as Double)
+            STRING -> c.setCellValue(cell.value as String)
+            DATE -> c.setCellValue(cell.value as LocalDate)
+            FORMULA -> c.setCellValue(cell.value as String)
+            ERROR -> c.setCellValue(cell.value as String)
+            BOOLEAN -> c.setCellValue(cell.value as Boolean)
+            EMPTY -> c.setCellValue(cell.value as String)
+        }
     }
+
+    private fun SXSSFSheet.row(i: Int): SXSSFRow {
+        return this.getRow(i) ?: this.createRow(i)
+    }
+
+    private fun SXSSFRow.cell(i: Int): SXSSFCell {
+        return this.getCell(i, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK) ?: this.createCell(i)
+    }
+
+    override fun close() {
+        try {
+            workbook.write(stream);
+            stream.close();
+        } finally {
+            // dispose of temporary files backing this workbook on disk
+            workbook.dispose();
+        }
+    }
+
 }

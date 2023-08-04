@@ -2,7 +2,6 @@ package net.technearts.xcl
 
 import io.quarkus.arc.log.LoggerName
 import io.quarkus.picocli.runtime.annotations.TopCommand
-import org.eclipse.microprofile.config.inject.ConfigProperty
 import org.jboss.logging.Logger
 import picocli.CommandLine.*
 import java.io.File
@@ -27,38 +26,20 @@ class ReadCommand : Runnable {
     @Option(names = ["-t", "--tab"], description = ["Name of the tab"], defaultValue = "tab1")
     lateinit var tab: String
 
-    @Option(names = ["-c", "--cell"], description = ["Starting cell"], defaultValue = "A1")
-    lateinit var cell: String
-
     @Option(names = ["-i", "--in"], description = ["input file"])
     var inputFile: File? = null
 
     @Option(names = ["-o", "--out"], description = ["output file"])
     var outputFile: File? = null
 
-    @Option(
-        names = ["--head"],
-        description = ["Reads only the first lines of input", "or (if negative) skips the initial lines"],
-        defaultValue = "0"
-    )
-    var head: Int = 0
-
-    @Option(
-        names = ["--tail"],
-        description = ["Reads only the last lines of input", "or (if negative) skips the final lines"],
-        defaultValue = "0"
-    )
-    var tail: Int = 0
-
     @Parameters(paramLabel = "columns", description = ["Your output columns"], arity = "0..*")
     var columns: List<String>? = null
 
     override fun run() {
         log.info("tab: $tab")
-        log.info("cell: $cell")
         log.info("input file: ${inputFile ?: "stdin"}")
         log.info("output file: ${outputFile ?: "stdout"}")
-        repl(inExcelStream(inputFile, tab), outCSVStream(outputFile))
+        repl(inExcelStream(inputFile, tab), outCSVStream(outputFile), columns?: emptyList())
     }
 }
 
@@ -75,38 +56,20 @@ class CreateCommand : Runnable {
     @Option(names = ["-t", "--tab"], description = ["Name of the tab"], defaultValue = "tab1")
     lateinit var tab: String
 
-    @Option(names = ["-c", "--cell"], description = ["Starting cell"], defaultValue = "A1")
-    lateinit var cell: String
-
     @Option(names = ["-i", "--in"], description = ["input file"])
     var inputFile: File? = null
 
     @Option(names = ["-o", "--out"], description = ["output file"])
     var outputFile: File? = null
 
-    @Option(
-        names = ["--head"],
-        description = ["Reads only the first lines of input", "or (if negative) skips the initial lines"],
-        defaultValue = "0"
-    )
-    var head: Int = 0
-
-    @Option(
-        names = ["--tail"],
-        description = ["Reads only the last lines of input", "or (if negative) skips the final lines"],
-        defaultValue = "0"
-    )
-    var tail: Int = 0
-
     @Parameters(paramLabel = "columns", description = ["Your output columns"], arity = "0..*")
     var columns: List<String>? = null
 
     override fun run() {
         log.info("tab: $tab")
-        log.info("cell: $cell")
         log.info("input file: ${inputFile ?: "stdin"}")
         log.info("output file: ${outputFile ?: "stdout"}")
-        repl(inCSVStream(inputFile), outExcelStream(outputFile, tab))
+        repl(inCSVStream(inputFile), outExcelStream(outputFile, tab), columns?: emptyList())
     }
 
 }

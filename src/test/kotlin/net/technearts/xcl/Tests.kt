@@ -1,14 +1,17 @@
 package net.technearts.xcl
 
+import io.quarkus.arc.log.LoggerName
 import io.quarkus.test.junit.QuarkusTest
+import org.dhatim.fastexcel.VisibilityState
+import org.dhatim.fastexcel.Workbook
 import org.dhatim.fastexcel.reader.ReadableWorkbook
+import org.jboss.logging.Logger
 import org.junit.jupiter.api.Test
-import java.io.File
-import java.io.FileInputStream
-import java.io.IOException
+import java.io.*
 import java.nio.file.Files
 import java.nio.file.Paths
-
+import java.util.stream.Stream
+import org.dhatim.fastexcel.reader.CellType.*
 
 fun getTestResources(fileName: String): File {
     return Paths.get("src", "test", "resources", fileName).toAbsolutePath().toFile()
@@ -41,10 +44,10 @@ class ReplTest {
     @Test
     fun testReadRepl() {
         val file = getTestResources("read.xlsx")
-        val tempFile = Files.createTempFile("temp", ".txt")
+        val tempFile = Files.createTempFile("temp", ".csv")
         println("Using ${file.absolutePath}")
         println("Writing $tempFile")
-        repl(inExcelStream(file, "Planilha1"), outCSVStream(tempFile.toFile()))
+        repl(inExcelStream(file, "Planilha1"), outCSVStream(tempFile.toFile()), emptyList())
         val result = Files.readString(tempFile.toAbsolutePath())
         println(result)
         assert(result.startsWith("A,B,C"))
@@ -56,9 +59,69 @@ class ReplTest {
         val tempFile = Files.createTempFile("temp", ".xlsx")
         println("Using ${file.absolutePath}")
         println("Writing $tempFile")
-        repl(inCSVStream(file), outExcelStream(tempFile.toFile(), "PlanilhaA"))
+        repl(inCSVStream(file), outExcelStream(tempFile.toFile(), "PlanilhaA"), emptyList())
         val result = readExcel(tempFile.toFile(), "PlanilhaA")
         result.forEach{ (_, c) ->  println("$c") }
         result[0]?.let { assert(it.containsAll(listOf("A", "B", "C"))) }
+    }
+
+    @Test
+    fun testReadReplWithTransformations() {
+        val file = getTestResources("read.xlsx")
+        val tempFile = Files.createTempFile("temp", ".csv")
+        println("Using ${file.absolutePath}")
+        println("Writing $tempFile")
+        repl(inExcelStream(file, "Planilha1"), outCSVStream(tempFile.toFile()), listOf("$0", "$1 + $1", "$2"))
+        val result = Files.readString(tempFile.toAbsolutePath())
+        println(result)
+        assert(result.startsWith("A,BB,C"))
+    }
+}
+
+
+
+class WorkbookReader(stream: InputStream, private val tab: String) : BufferedInputStream(stream), CellProducer {
+    private val workbook = ReadableWorkbook(this)
+    private val sheet = workbook.findSheet(tab)
+
+    @LoggerName("xcl")
+    private lateinit var log: Logger
+
+    override fun iterator(): Iterator<XCLCell<*>> {
+        return if (sheet.isPresent) {
+            sheet.get().openStream().flatMap { row ->
+                row.stream().map { cell ->
+                    val r = cell.address.row
+                    val c = cell.address.column
+                    val last = c == row.cellCount - 1
+                    when (cell.type) {
+                        NUMBER -> XCLCell(r, c, XCLCellType.NUMBER, cell.asNumber(), last)
+                        STRING -> XCLCell(r, c, XCLCellType.STRING, cell.asString(), last)
+                        FORMULA -> XCLCell(r, c, XCLCellType.FORMULA, cell.formula, last)
+                        ERROR -> XCLCell(r, c, XCLCellType.ERROR, cell.rawValue, last)
+                        BOOLEAN -> XCLCell(r, c, XCLCellType.BOOLEAN, cell.asBoolean(), last)
+                        EMPTY -> XCLCell(r, c, XCLCellType.EMPTY, "", last)
+                        else -> XCLCell(r, c, XCLCellType.ERROR, "", last)
+                    }
+                }
+            }
+        } else {
+            log.warn("Excel Tab $tab not found")
+            Stream.empty()
+        }.iterator()
+    }
+}
+
+class WorkbookWriter(stream: OutputStream, tab: String) : Workbook(stream, "xcl", "1.0"), CellConsumer {
+    private val sheet = this.newWorksheet(tab)
+
+    init {
+        sheet.keepInActiveTab()
+        sheet.visibilityState = VisibilityState.VISIBLE;
+    }
+
+    override fun accept(cell: XCLCell<*>) {
+        // TODO tratar pelo tipo da cell
+        sheet.value(cell.row, cell.col, cell.value.toString())
     }
 }
