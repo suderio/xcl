@@ -47,10 +47,11 @@ class ReplTest {
         val tempFile = Files.createTempFile("temp", ".csv")
         println("Using ${file.absolutePath}")
         println("Writing $tempFile")
-        repl(inExcelStream(file, "Planilha1"), outCSVStream(tempFile.toFile()), emptyList())
+        repl(inExcelStream(file, "Planilha1", "", ""), outCSVStream(tempFile.toFile(), ",", "\r\n"), emptyList())
         val result = Files.readString(tempFile.toAbsolutePath())
         println(result)
         assert(result.startsWith("A,B,C"))
+        assert(result.lines().filter { s -> s.isNotEmpty() }.size == 4)
     }
 
     @Test
@@ -59,10 +60,11 @@ class ReplTest {
         val tempFile = Files.createTempFile("temp", ".xlsx")
         println("Using ${file.absolutePath}")
         println("Writing $tempFile")
-        repl(inCSVStream(file), outExcelStream(tempFile.toFile(), "PlanilhaA"), emptyList())
+        repl(inCSVStream(file,",", "\r\n"), outExcelStream(tempFile.toFile(), "PlanilhaA", "", ""), emptyList())
         val result = readExcel(tempFile.toFile(), "PlanilhaA")
         result.forEach{ (_, c) ->  println("$c") }
         result[0]?.let { assert(it.containsAll(listOf("A", "B", "C"))) }
+        assert(result.size == 4)
     }
 
     @Test
@@ -71,10 +73,11 @@ class ReplTest {
         val tempFile = Files.createTempFile("temp", ".csv")
         println("Using ${file.absolutePath}")
         println("Writing $tempFile")
-        repl(inExcelStream(file, "Planilha1"), outCSVStream(tempFile.toFile()), listOf("$0", "$1 + $1", "$2"))
+        repl(inExcelStream(file, "Planilha1", "", ""), outCSVStream(tempFile.toFile(),",", "\r\n"), listOf("$0", "$1 + $1", "$2"))
         val result = Files.readString(tempFile.toAbsolutePath())
         println(result)
         assert(result.startsWith("A,BB,C"))
+        assert(result.lines().filter { s -> s.isNotEmpty() }.size == 4)
     }
 }
 
@@ -93,15 +96,14 @@ class WorkbookReader(stream: InputStream, private val tab: String) : BufferedInp
                 row.stream().map { cell ->
                     val r = cell.address.row
                     val c = cell.address.column
-                    val last = c == row.cellCount - 1
                     when (cell.type) {
-                        NUMBER -> XCLCell(r, c, XCLCellType.NUMBER, cell.asNumber(), last)
-                        STRING -> XCLCell(r, c, XCLCellType.STRING, cell.asString(), last)
-                        FORMULA -> XCLCell(r, c, XCLCellType.FORMULA, cell.formula, last)
-                        ERROR -> XCLCell(r, c, XCLCellType.ERROR, cell.rawValue, last)
-                        BOOLEAN -> XCLCell(r, c, XCLCellType.BOOLEAN, cell.asBoolean(), last)
-                        EMPTY -> XCLCell(r, c, XCLCellType.EMPTY, "", last)
-                        else -> XCLCell(r, c, XCLCellType.ERROR, "", last)
+                        NUMBER -> XCLCell(r, c, XCLCellType.NUMBER, cell.asNumber())
+                        STRING -> XCLCell(r, c, XCLCellType.STRING, cell.asString())
+                        FORMULA -> XCLCell(r, c, XCLCellType.FORMULA, cell.formula)
+                        ERROR -> XCLCell(r, c, XCLCellType.ERROR, cell.rawValue)
+                        BOOLEAN -> XCLCell(r, c, XCLCellType.BOOLEAN, cell.asBoolean())
+                        EMPTY -> XCLCell(r, c, XCLCellType.EMPTY, "")
+                        else -> XCLCell(r, c, XCLCellType.ERROR, "")
                     }
                 }
             }
@@ -117,7 +119,7 @@ class WorkbookWriter(stream: OutputStream, tab: String) : Workbook(stream, "xcl"
 
     init {
         sheet.keepInActiveTab()
-        sheet.visibilityState = VisibilityState.VISIBLE;
+        sheet.visibilityState = VisibilityState.VISIBLE
     }
 
     override fun accept(cell: XCLCell<*>) {
