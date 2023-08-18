@@ -13,13 +13,12 @@ class CSVWriter(stream: OutputStream, format: CSVFormat) : FilterWriter(Buffered
     private var record = mutableListOf<String>()
 
     override fun accept(cell: XCLCell<*>) {
-        if ((currentRow ?: cell.row) == cell.row) {
-            record += cell.value.toString()
-        } else {
+        if ((currentRow ?: cell.address.row) != cell.address.row) {
             printer.printRecord(record)
             record.clear()
         }
-        currentRow = cell.row
+        record+= cell.value.toString()
+        currentRow = cell.address.row
     }
 
     override fun close() {
@@ -29,15 +28,20 @@ class CSVWriter(stream: OutputStream, format: CSVFormat) : FilterWriter(Buffered
     }
 }
 
-class CSVReader(stream: InputStream, private val format: CSVFormat) : BufferedReader(InputStreamReader(stream)),
+class CSVReader(
+    stream: InputStream,
+    private val format: CSVFormat,
+    private val start: Address,
+    private val end: Address
+) : BufferedReader(InputStreamReader(stream)),
     CellProducer {
     override fun iterator(): Iterator<XCLCell<*>> {
-        return format.parse(this)
-            .asSequence()
-            .flatMapIndexed { row: Int, record: CSVRecord ->
-                var col = 0
-                record.asSequence().map { field -> XCLCell(row, col++, XCLCellType.STRING, field) }
-            }.iterator()
+        return format.parse(this).asSequence().flatMapIndexed { row: Int, record: CSVRecord ->
+            var col = 0
+            record.asSequence().map { field -> XCLCell(Address(row, col++), XCLCellType.STRING, field) }
+        }
+            .filter { cell -> cell.address.row >= start.row && cell.address.column >= start.column && cell.address.row <= end.row && cell.address.column <= end.column }
+            .iterator()
     }
 }
 

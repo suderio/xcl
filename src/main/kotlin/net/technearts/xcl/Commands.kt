@@ -4,59 +4,95 @@ import io.quarkus.arc.log.LoggerName
 import io.quarkus.picocli.runtime.annotations.TopCommand
 import org.jboss.logging.Logger
 import picocli.CommandLine.*
+import picocli.CommandLine.Help.Visibility.ALWAYS
 import java.io.File
-import kotlin.system.exitProcess
-
-/**
- * cat file.xlsx | xcl
- * outputs the content of the first tab as csv
- */
+import java.util.regex.Pattern
 
 @TopCommand
 @Command(
-    name = "xcl",
+    name = "sheeter",
+    description = ["""
+        A simple cli utility to read and write excel and csv files.
+        Sheeter processes csv and xlsx files, allows for simple transformations,
+        and works with pipes.
+        
+        Usage:
+
+        # Takes an excel file and creates a csv file
+        cat file.xlsx | xcl xl2csv >> result.csv
+        
+        # Takes an csv file with fields separated by a semicolon and pipes to stdout
+        cat file.csv | xcl csv2xl --separator="\n" --delimiter=";" --sheet=tab02 >> result.xls
+        
+        """],
+    scope = ScopeType.INHERIT,
     mixinStandardHelpOptions = true,
-    helpCommand = true,
-    description = ["Reads one sheet of an excel file and outputs as a CSV.", "This is the default command."],
-    subcommands = [CsvToExcelCommand::class, ExcelToCsvCommand::class, CsvToCsvCommand::class, ExcelToExcelCommand::class]
+    sortOptions = false,
+    sortSynopsis = false,
+    usageHelpAutoWidth = true,
+    showAtFileInUsageHelp = true,
+    exitCodeOnSuccess = 0,
+    exitCodeOnInvalidInput = 1,
+    subcommands = [HelpCommand::class, CsvToExcelCommand::class, ExcelToCsvCommand::class, CsvToCsvCommand::class, ExcelToExcelCommand::class]
 )
-class HelpCommand : Runnable {
+class MainCommand
 
-    override fun run() {
-        exitProcess(0)
-    }
-}
 
-/**
- *
- * cat file.csv | xcl create --template template.xsl --line-separator="\n" \
- * --field-separator="," --cell=B1 --tab=tab02 >> result.xls
- */
-@Command(name = "create", mixinStandardHelpOptions = true, description = ["Creates a new excel file from the input"])
+
+@Command(
+    name = "csv2xl", description = [
+"""Creates a new excel file from the input. The input must
+be a csv file, although its format is fully configurable.
+The default configurations is a modified RFC 4180 that
+works well with Excel csv files.
+"""]
+)
 class CsvToExcelCommand : Runnable {
     @LoggerName("xcl")
     lateinit var log: Logger
 
-    @Option(names = ["--sheet"], description = ["Name of the sheet"], defaultValue = "Sheet1")
-    lateinit var sheet: String
-
-    @Option(names = ["-d", "--delimiter"], description = ["CSV field delimiter"], defaultValue = ",")
-    lateinit var delimiter: String
-
-    @Option(names = ["-s", "--separator"], description = ["CSV record separator"], defaultValue = "\r\n")
-    lateinit var separator: String
-
     @Option(names = ["-i", "--in"], description = ["input file"])
     var inputFile: File? = null
+
+    @Option(names = ["--inStartCell"], description = ["Starting cell in the RnCn format"], defaultValue = "R1C1", converter = [AddressConverter::class])
+    lateinit var inStartCell: Address
+
+    @Option(names = ["--inEndCell"], description = ["End cell in the RnCn format"], defaultValue = "", converter = [AddressConverter::class])
+    lateinit var inEndCell: Address
+
+    @Option(
+        names = ["-d", "--delimiter"],
+        description = ["CSV field delimiter"],
+        defaultValue = ",",
+        showDefaultValue = ALWAYS
+    )
+    lateinit var delimiter: String
+
+    @Option(
+        names = ["-s", "--separator"],
+        description = ["CSV record separator"],
+        defaultValue = "\r\n",
+        showDefaultValue = ALWAYS
+    )
+    lateinit var separator: String
 
     @Option(names = ["-o", "--out"], description = ["output file"])
     var outputFile: File? = null
 
-    @Option(names = ["--outStartCell"], description = ["Starting cell"], defaultValue = "R1C1")
-    lateinit var outStartCell: String
+    @Option(
+        names = ["--sheet"], description = ["Name of the sheet"], defaultValue = "Sheet1", showDefaultValue = ALWAYS
+    )
+    lateinit var sheet: String
 
-    @Option(names = ["--outEndCell"], description = ["Starting cell"], defaultValue = "")
-    lateinit var outEndCell: String
+    @Option(
+        names = ["--outStartCell"],
+        paramLabel = "Starting Cell",
+        description = ["Starting cell"],
+        defaultValue = "R1C1",
+        showDefaultValue = ALWAYS,
+        converter = [AddressConverter::class]
+    )
+    lateinit var outStartCell: Address
 
     @Parameters(paramLabel = "columns", description = ["Your output columns"], arity = "0..*")
     var columns: List<String>? = null
@@ -66,44 +102,46 @@ class CsvToExcelCommand : Runnable {
         log.info("input file: ${inputFile ?: "stdin"}")
         log.info("output file: ${outputFile ?: "stdout"}")
         repl(
-            inCSVStream(inputFile, delimiter, separator),
-            outExcelStream(outputFile, sheet, outStartCell, outEndCell),
+            inCSVStream(inputFile, delimiter, separator, inStartCell, inEndCell),
+            outExcelStream(outputFile, sheet, outStartCell),
             columns ?: emptyList()
         )
     }
 
 }
 
-/**
- *
- * cat file.xlsx | xcl xl2csv >> result.csv
- */
-@Command(name = "xl2csv", mixinStandardHelpOptions = true)
+@Command(
+    name = "xl2csv", description = [
+"""Creates a new csv file from the input. The input must
+be an excel file. The default csv format is a modified
+RFC 4180 similar to Excel csv files.
+"""]
+)
 class ExcelToCsvCommand : Runnable {
 
     @LoggerName("xcl")
     private lateinit var log: Logger
+
+    @Option(names = ["-i", "--in"], description = ["input file"])
+    var inputFile: File? = null
+
+    @Option(names = ["--sheet"], description = ["Name of the sheet"], defaultValue = "Sheet1")
+    lateinit var sheet: String
+
+    @Option(names = ["--inStartCell"], description = ["Starting cell in the RnCn format"], defaultValue = "R1C1", converter = [AddressConverter::class])
+    lateinit var inStartCell: Address
+
+    @Option(names = ["--inEndCell"], description = ["End cell in the RnCn format"], defaultValue = "", converter = [AddressConverter::class])
+    lateinit var inEndCell: Address
+
+    @Option(names = ["-o", "--out"], description = ["output file"])
+    var outputFile: File? = null
 
     @Option(names = ["-d", "--delimiter"], description = ["CSV field delimiter"], defaultValue = ",")
     lateinit var delimiter: String
 
     @Option(names = ["-s", "--separator"], description = ["CSV record separator"], defaultValue = "\r\n")
     lateinit var separator: String
-
-    @Option(names = ["--sheet"], description = ["Name of the sheet"], defaultValue = "Sheet1")
-    lateinit var sheet: String
-
-    @Option(names = ["-i", "--in"], description = ["input file"])
-    var inputFile: File? = null
-
-    @Option(names = ["-o", "--out"], description = ["output file"])
-    var outputFile: File? = null
-
-    @Option(names = ["--inStartCell"], description = ["Starting cell in the RnCn format"], defaultValue = "R1C1")
-    lateinit var inStartCell: String
-
-    @Option(names = ["--inEndCell"], description = ["End cell in the RnCn format"], defaultValue = "")
-    lateinit var inEndCell: String
 
     @Parameters(paramLabel = "columns", description = ["Your output columns"], arity = "0..*")
     var columns: List<String>? = null
@@ -122,30 +160,41 @@ class ExcelToCsvCommand : Runnable {
 
 @Command(
     name = "csv2csv",
-    description = ["Reads a csv file and writes to another."],
+    description = [
+"""Creates a new csv file from the input. The input must
+be a csv file, although the input and output formats are
+fully configurable. The default configurations is a 
+modified RFC 4180 that is similar to Excel csv files.
+"""],
 )
 class CsvToCsvCommand : Runnable {
 
     @LoggerName("xcl")
     private lateinit var log: Logger
 
+    @Option(names = ["-i", "--in"], description = ["input file"])
+    var inputFile: File? = null
+
+    @Option(names = ["--inStartCell"], description = ["Starting cell in the RnCn format"], defaultValue = "R1C1", converter = [AddressConverter::class])
+    lateinit var inStartCell: Address
+
+    @Option(names = ["--inEndCell"], description = ["End cell in the RnCn format"], defaultValue = "", converter = [AddressConverter::class])
+    lateinit var inEndCell: Address
+
     @Option(names = ["-d", "--inDelimiter"], description = ["CSV field delimiter"], defaultValue = ",")
     lateinit var inDelimiter: String
 
-    @Option(names = ["-s","--inSeparator"], description = ["CSV record separator"], defaultValue = "\r\n")
+    @Option(names = ["-s", "--inSeparator"], description = ["CSV record separator"], defaultValue = "\r\n")
     lateinit var inSeparator: String
+
+    @Option(names = ["-o", "--out"], description = ["output file"])
+    var outputFile: File? = null
 
     @Option(names = ["-e", "--outDelimiter"], description = ["CSV field delimiter"], defaultValue = ",")
     lateinit var outDelimiter: String
 
     @Option(names = ["-t", "--outSeparator"], description = ["CSV record separator"], defaultValue = "\r\n")
     lateinit var outSeparator: String
-
-    @Option(names = ["-i", "--in"], description = ["input file"])
-    var inputFile: File? = null
-
-    @Option(names = ["-o", "--out"], description = ["output file"])
-    var outputFile: File? = null
 
     @Parameters(paramLabel = "columns", description = ["Your output columns"], arity = "0..*")
     var columns: List<String>? = null
@@ -154,7 +203,7 @@ class CsvToCsvCommand : Runnable {
         log.info("input file: ${inputFile ?: "stdin"}")
         log.info("output file: ${outputFile ?: "stdout"}")
         repl(
-            inCSVStream(inputFile, inDelimiter, inSeparator),
+            inCSVStream(inputFile, inDelimiter, inSeparator, inStartCell, inEndCell),
             outCSVStream(outputFile, outDelimiter, outSeparator),
             columns ?: emptyList()
         )
@@ -163,33 +212,33 @@ class CsvToCsvCommand : Runnable {
 
 @Command(
     name = "xl2xl",
-    description = ["Reads one sheet of an excel file and outputs as another excel file."],
+    description = [
+"""Creates a new excel file from the input. The input must
+be another excel file.
+"""],
 )
 class ExcelToExcelCommand : Runnable {
 
     @LoggerName("xcl")
     private lateinit var log: Logger
 
+    @Option(names = ["-i", "--in"], description = ["input file"])
+    var inputFile: File? = null
+
     @Option(names = ["--sheet"], description = ["Name of the sheet"], defaultValue = "Sheet1")
     lateinit var sheet: String
 
-    @Option(names = ["-i", "--in"], description = ["input file"])
-    var inputFile: File? = null
+    @Option(names = ["--inStartCell"], description = ["Starting cell in the RnCn format"], defaultValue = "R1C1", converter = [AddressConverter::class])
+    lateinit var inStartCell: Address
+
+    @Option(names = ["--inEndCell"], description = ["End cell in the RnCn format"], defaultValue = "", converter = [AddressConverter::class])
+    lateinit var inEndCell: Address
 
     @Option(names = ["-o", "--out"], description = ["output file"])
     var outputFile: File? = null
 
-    @Option(names = ["--inStartCell"], description = ["Starting cell in the RnCn format"], defaultValue = "R1C1")
-    lateinit var inStartCell: String
-
-    @Option(names = ["--inEndCell"], description = ["End cell in the RnCn format"], defaultValue = "")
-    lateinit var inEndCell: String
-
-    @Option(names = ["--outStartCell"], description = ["Starting cell in the RnCn format"], defaultValue = "R1C1")
-    lateinit var outStartCell: String
-
-    @Option(names = ["--outEndCell"], description = ["End cell in the RnCn format"], defaultValue = "")
-    lateinit var outEndCell: String
+    @Option(names = ["--outStartCell"], description = ["Starting cell in the RnCn format"], defaultValue = "R1C1", converter = [AddressConverter::class])
+    lateinit var outStartCell: Address
 
     @Parameters(paramLabel = "columns", description = ["Your output columns"], arity = "0..*")
     var columns: List<String>? = null
@@ -200,9 +249,23 @@ class ExcelToExcelCommand : Runnable {
         log.info("output file: ${outputFile ?: "stdout"}")
         repl(
             inExcelStream(inputFile, sheet, inStartCell, inEndCell),
-            outExcelStream(outputFile, sheet, outStartCell, outEndCell),
+            outExcelStream(outputFile, sheet, outStartCell),
             columns ?: emptyList()
         )
     }
 }
 
+class AddressConverter : ITypeConverter<Address?> {
+    private val r1c1Pattern: Pattern = Pattern.compile("R\\d+C\\d+", Pattern.CASE_INSENSITIVE)
+    override fun convert(address: String?): Address? {
+        if (address?.isNotBlank() == true && r1c1Pattern.matcher(address).matches()) {
+            val result = address.split('r', 'c', ignoreCase = true, limit = 0)
+                .map(String::toInt)
+                .filterIndexed {  i, _ -> i <= 1 }
+                //.map{i -> i - 1}
+            return Address(result[0], result[1])
+        }
+        return null
+     }
+
+}

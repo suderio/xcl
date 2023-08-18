@@ -11,27 +11,53 @@ import org.apache.poi.xssf.streaming.SXSSFWorkbook
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import java.io.InputStream
 import java.io.OutputStream
-import java.time.LocalDate
+import java.time.LocalDateTime
 import java.util.function.Predicate
 
 class XSSFWorkbookWriter(
     private val stream: OutputStream,
     tab: String,
-    private val start: Pair<Int, Int>?,
-    private val end: Pair<Int, Int>?
+    private val start: Address?
 ) : CellConsumer {
     private val workbook = SXSSFWorkbook()
     private val sheet = workbook.createSheet(tab)
+    private val dateCellStyle = workbook.createCellStyle()
+    init {
+        dateCellStyle.dataFormat = workbook.creationHelper.createDataFormat().getFormat("dd/mm/yyyy")
+    }
+
     override fun accept(cell: XCLCell<*>) {
-        val c = sheet.row(cell.row).cell(cell.col)
+        val c = sheet.row(cell.address.row).cell(cell.address.column)
         when (cell.type) {
-            XCLCellType.NUMBER -> c.setCellValue(cell.value as Double)
-            XCLCellType.STRING -> c.setCellValue(cell.value as String)
-            XCLCellType.DATE -> c.setCellValue(cell.value as LocalDate)
-            XCLCellType.FORMULA -> c.setCellValue(cell.value as String)
-            XCLCellType.ERROR -> c.setCellValue(cell.value as String)
-            XCLCellType.BOOLEAN -> c.setCellValue(cell.value as Boolean)
-            XCLCellType.EMPTY -> c.setCellValue(cell.value as String)
+            XCLCellType.NUMBER -> {
+                c.setCellValue(cell.value as Double)
+                c.cellType = CellType.NUMERIC
+            }
+            XCLCellType.STRING -> {
+                c.setCellValue(cell.value as String)
+                c.cellType = CellType.STRING
+            }
+            XCLCellType.DATE -> {
+                c.setCellValue(cell.value as LocalDateTime)
+                c.cellType = CellType.NUMERIC
+                c.cellStyle = dateCellStyle
+            }
+            XCLCellType.FORMULA -> {
+                c.setCellValue(cell.value as String)
+                c.cellType = CellType.FORMULA
+            }
+            XCLCellType.ERROR -> {
+                c.setCellValue(cell.value as String)
+                c.cellType = CellType.ERROR
+            }
+            XCLCellType.BOOLEAN -> {
+                c.setCellValue(cell.value as Boolean)
+                c.cellType = CellType.BOOLEAN
+            }
+            XCLCellType.EMPTY -> {
+                c.setCellValue(cell.value as String)
+                c.cellType = CellType.BLANK
+            }
         }
     }
 
@@ -58,8 +84,8 @@ class XSSFWorkbookWriter(
 class XSSFWorkbookReader(
     private val stream: InputStream,
     tab: String,
-    private val start: Pair<Int, Int>?,
-    private val end: Pair<Int, Int>?
+    private val start: Address?,
+    private val end: Address?
 ) : CellProducer {
     private val workbook = XSSFWorkbook(stream)
     private val sheet = workbook.getSheet(tab)
@@ -68,33 +94,32 @@ class XSSFWorkbookReader(
             .asSequence().flatMap { row ->
                 row.filter { cell -> columnFilter(start, end).test(cell) }
                     .asSequence().map { cell ->
-                        val r = cell.rowIndex
-                        val c = cell.columnIndex
+                        val address = Address(cell.rowIndex, cell.columnIndex)
                         when (cell.cellType) {
-                            CellType.BLANK -> XCLCell(r, c, XCLCellType.EMPTY, "")
+                            CellType.BLANK -> XCLCell(address, XCLCellType.EMPTY, "")
                             CellType.NUMERIC -> if (DateUtil.isCellDateFormatted(cell)) {
-                                XCLCell(r, c, XCLCellType.DATE, cell.localDateTimeCellValue)
+                                XCLCell(address, XCLCellType.DATE, cell.localDateTimeCellValue)
                             } else {
-                                XCLCell(r, c, XCLCellType.NUMBER, cell.numericCellValue)
+                                XCLCell(address, XCLCellType.NUMBER, cell.numericCellValue)
                             }
 
-                            CellType.STRING -> XCLCell(r, c, XCLCellType.STRING, cell.stringCellValue)
-                            CellType.FORMULA -> XCLCell(r, c, XCLCellType.FORMULA, cell.cellFormula)
-                            CellType.BOOLEAN -> XCLCell(r, c, XCLCellType.BOOLEAN, cell.booleanCellValue)
-                            CellType.ERROR -> XCLCell(r, c, XCLCellType.ERROR, cell.errorCellValue)
-                            CellType._NONE -> XCLCell(r, c, XCLCellType.EMPTY, "")
-                            else -> XCLCell(cell.rowIndex, c, XCLCellType.EMPTY, "")
+                            CellType.STRING -> XCLCell(address, XCLCellType.STRING, cell.stringCellValue)
+                            CellType.FORMULA -> XCLCell(address, XCLCellType.FORMULA, cell.cellFormula)
+                            CellType.BOOLEAN -> XCLCell(address, XCLCellType.BOOLEAN, cell.booleanCellValue)
+                            CellType.ERROR -> XCLCell(address, XCLCellType.ERROR, cell.errorCellValue)
+                            CellType._NONE -> XCLCell(address, XCLCellType.EMPTY, "")
+                            else -> XCLCell(address, XCLCellType.EMPTY, "")
                         }
                     }
             }.iterator()
     }
 
-    private fun rowFilter(start: Pair<Int, Int>?, end: Pair<Int, Int>?): Predicate<Row> =
-        Predicate<Row> { row -> row.rowNum >= (start?.first ?: 0) && row.rowNum <= (end?.first ?: Int.MAX_VALUE) }
+    private fun rowFilter(start: Address?, end: Address?): Predicate<Row> =
+        Predicate<Row> { row -> row.rowNum >= (start?.row ?: 0) && row.rowNum <= (end?.row ?: Int.MAX_VALUE) }
 
-    private fun columnFilter(start: Pair<Int, Int>?, end: Pair<Int, Int>?): Predicate<Cell> =
+    private fun columnFilter(start: Address?, end: Address?): Predicate<Cell> =
         Predicate<Cell> { cell ->
-            cell.columnIndex >= (start?.second ?: 0) && cell.columnIndex <= (end?.second ?: Int.MAX_VALUE)
+            cell.columnIndex >= (start?.column ?: 0) && cell.columnIndex <= (end?.column ?: Int.MAX_VALUE)
         }
 
     override fun close() {
