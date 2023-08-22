@@ -1,22 +1,63 @@
 package net.technearts.xcl
 
 import bsh.Interpreter
+import net.technearts.xcl.XCLCellType.*
+import java.time.LocalDateTime
+import java.util.*
 import java.util.regex.Pattern
-import java.util.stream.Collectors
 
 class SheeterInterpreter : Interpreter() {
-    val cells = mutableListOf<XCLCell<*>>()
-    private val columnPattern = Pattern.compile("\\$\\d+")
+    private val columnPattern = Pattern.compile("\\$(\\d+)")
 
-    fun <T> allParametersKnown(currentCell: XCLCell<T>, columns: List<String>): Boolean {
+    private fun <T> allParametersKnown(currentCell: XCLCell<T>, columns: List<String>): Boolean {
         val currentColumn = currentCell.address.column
-        return columns.filterIndexed { index, _ -> index < currentColumn }.flatMap { it.referencedColumns() }
+        return columns.map { biggestColumnReference(it) }
             .none { column -> column > currentColumn }
     }
 
-    private fun String.referencedColumns(): Set<Int> {
-        return columnPattern.matcher(this).results().map { r -> r.group().replace("$", "") }.map(String::toInt)
-            .collect(Collectors.toSet())
+    private fun biggestColumnReference(column: String): Int {
+        return columnPattern.matcher(column).results()
+            .map { r -> r.group().replace("$", "") }
+            .map(String::toInt)
+            .reduce(Math::max)
+            .get()
     }
 
+    fun <T> eval(cell: XCLCell<T>, columns: List<String>): Sequence<XCLCell<*>> {
+        // __cell__$row__$col = original cell value
+        this.set("__cell__${cell.address.row}__${cell.address.column}", cell.value)
+
+        // if columns is empty, no need to do anything else
+        if (columns.isEmpty())
+            return sequenceOf(cell)
+
+        // if current cell column does not have enough info to eval all columns, do nothing
+        if (!allParametersKnown(cell, columns)) {
+            return emptySequence()
+        }
+
+        // replace every column reference with the previous cell values and evaluate the expression
+        return columns.asSequence()
+            .map { s ->
+                columnPattern.matcher(s)
+                    .replaceAll { match -> "__cell__${cell.address.row}__${match.group().replace("$", "")}" }
+            }
+            .onEach { this.eval("current = $it") }
+            .mapIndexed { i, _ -> createCellFromCurrent(cell.address.row, i)
+            }
+
+    }
+
+    private fun createCellFromCurrent(row: Int, column: Int): XCLCell<*> {
+        val result = this.get("current")
+        return XCLCell(
+            Address(row, column), when (result) {
+                is Number -> NUMBER
+                is Boolean -> BOOLEAN
+                is Date -> DATE
+                is LocalDateTime -> DATE
+                else -> STRING
+            }, result
+        )
+    }
 }

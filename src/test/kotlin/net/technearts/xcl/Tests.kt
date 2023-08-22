@@ -46,7 +46,7 @@ class ReplTest {
         repl(
             inExcelStream(file, "Planilha1", Address(0, 0), Address(3, 3)),
             outCSVStream(tempFile.toFile(), ",", "\r\n"),
-            emptyList()
+            emptyList(), true
         )
         val result = Files.readString(tempFile.toAbsolutePath())
         println(result)
@@ -65,7 +65,7 @@ class ReplTest {
         repl(
             inCSVStream(file, ",", "\r\n", Address(0, 0), Address(3, 3)),
             outExcelStream(tempFile.toFile(), "PlanilhaA", Address(0, 0)),
-            emptyList()
+            emptyList(), true
         )
         val result = readExcel(tempFile.toFile(), "PlanilhaA")
         result.forEach { (_, c) -> println("$c") }
@@ -84,7 +84,7 @@ class ReplTest {
         repl(
             inExcelStream(file, "Planilha1", Address(0, 0), Address(3, 3)),
             outExcelStream(tempFile.toFile(), "PlanilhaA", Address(0, 0)),
-            emptyList()
+            emptyList(), true
         )
         val result = readExcel(tempFile.toFile(), "PlanilhaA")
         result.forEach { (_, c) -> println("$c") }
@@ -97,13 +97,14 @@ class ReplTest {
     fun testReadReplWithTransformations() {
         val file = getTestResources("read.xlsx")
         val tempFile = Files.createTempFile("temp", ".csv")
-        println("xlsx -> csv")
+        println("xlsx -> csv (\"\$0\", \"\$1 + \$1\", \"\$2\")")
         println("Using ${file.absolutePath}")
         println("Writing $tempFile")
         repl(
             inExcelStream(file, "Planilha1", Address(0, 0), Address(3, 3)),
             outCSVStream(tempFile.toFile(), ",", "\r\n"),
-            listOf("$0", "$1 + $1", "$2")
+            listOf("$0", "$1 + $1", "$2"),
+            true
         )
         val result = Files.readString(tempFile.toAbsolutePath())
         println(result)
@@ -116,13 +117,14 @@ class ReplTest {
     fun testReadReplWithTransformationsAddingColumn() {
         val file = getTestResources("read.xlsx")
         val tempFile = Files.createTempFile("temp", ".csv")
-        println("xlsx -> csv")
+        println("xlsx -> csv \"\$0\", \"\$1\", \"\$2\", \"\$1 + \$1\"")
         println("Using ${file.absolutePath}")
         println("Writing $tempFile")
         repl(
             inExcelStream(file, "Planilha1", Address(0, 0), Address(3, 3)),
             outCSVStream(tempFile.toFile(), ",", "\r\n"),
-            listOf("$0", "$1", "$2", "$1 + $1")
+            listOf("$0", "$1", "$2", "$1 + $1"),
+            true
         )
         val result = Files.readString(tempFile.toAbsolutePath())
         println(result)

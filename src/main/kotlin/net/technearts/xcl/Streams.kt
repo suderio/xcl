@@ -4,28 +4,15 @@ import java.io.Closeable
 import java.io.File
 import java.util.function.Consumer
 
-fun repl(input: CellProducer, output: CellConsumer, columns: List<String>) {
+fun repl(input: CellProducer, output: CellConsumer, columns: List<String>, show: Boolean = false) {
     val engine = SheeterInterpreter()
+    engine.showResults = show
     output.use { writer ->
         input.use { reader ->
-            reader.asSequence().flatMap { xclCell -> columns.script(xclCell, engine) }.forEach { writer.accept(it) }
+            reader.asSequence()
+                .flatMap { xclCell -> engine.eval(xclCell, columns) }
+                .forEach { writer.accept(it) }
         }
-    }
-}
-
-fun <T> List<String>.script(cell: XCLCell<T>, engine: SheeterInterpreter): Sequence<XCLCell<T>> {
-    // __cell__$row__$col = original cell value
-    engine.set("__cell__${cell.address.row}__${cell.address.column}", cell.value)
-    engine.cells += cell
-    return if (this.isEmpty() || !engine.allParametersKnown(cell, this)) {
-        sequenceOf(cell)
-    } else {
-        // changes every $n in the current 'column' with __cell__$row__n and sets it as 'current'
-        val expr = this[cell.address.column].replace("$", "__cell__${cell.address.row}__")
-        engine.eval("current = $expr")
-        // eval 'current' and sets as the returning cell value
-        @Suppress("UNCHECKED_CAST") val value: T = engine.get("current") as T
-        sequenceOf( XCLCell(cell.address, cell.type, value))
     }
 }
 
