@@ -16,20 +16,20 @@ fun repl(input: CellProducer, output: CellConsumer, columns: List<String>, show:
     }
 }
 
-fun inExcelStream(input: File?, tab: String, startCell: Address, endCell: Address): CellProducer {
-    return XSSFWorkbookReader(input?.inputStream() ?: System.`in`, tab, startCell, endCell)
+fun inExcelStream(input: File?, tab: String, startCell: Address = Address(0,0), endCell: Address? = null, removeHeaders: Boolean = false): CellProducer {
+    return XSSFWorkbookReader(input?.inputStream() ?: System.`in`, tab, startCell, endCell, removeHeaders)
 }
 
-fun inCSVStream(input: File?, delimiter: String, separator: String, startCell: Address, endCell: Address): CellProducer {
-    return CSVReader(input?.inputStream() ?: System.`in`, builder(delimiter, separator).build(), startCell, endCell)
+fun inCSVStream(input: File?, delimiter: String, separator: String, startCell: Address = Address(0,0), endCell: Address? = null, removeHeaders: Boolean = false): CellProducer {
+    return CSVReader(input?.inputStream() ?: System.`in`, builder(delimiter, separator).build(), startCell, endCell, removeHeaders)
 }
 
-fun outCSVStream(output: File?, delimiter: String, separator: String): CellConsumer {
-    return CSVWriter(output?.outputStream() ?: System.out, builder(delimiter, separator).build())
+fun outCSVStream(output: File?, delimiter: String, separator: String, headers: List<String> = emptyList()): CellConsumer {
+    return CSVWriter(output?.outputStream() ?: System.out, builder(delimiter, separator).build(), headers)
 }
 
-fun outExcelStream(output: File?, tab: String, startCell: Address): CellConsumer {
-    return XSSFWorkbookWriter(output?.outputStream() ?: System.out, tab, startCell)
+fun outExcelStream(output: File?, tab: String, startCell: Address = Address(0,0), headers: List<String> = emptyList()): CellConsumer {
+    return XSSFWorkbookWriter(output?.outputStream() ?: System.out, tab, startCell, headers)
 }
 
 data class Address(

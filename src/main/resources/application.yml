@@ -1,4 +1,11 @@
 quarkus:
+  banner:
+    enabled: false
+  application:
+    name: sheeter
+    version: "1.0"
+  log:
+    level: WARN
   native:
     container-build: true
     compression:

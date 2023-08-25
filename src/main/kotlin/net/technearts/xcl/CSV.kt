@@ -6,18 +6,27 @@ import org.apache.commons.csv.CSVRecord
 import org.apache.commons.csv.DuplicateHeaderMode
 import java.io.*
 
-class CSVWriter(stream: OutputStream, format: CSVFormat) : FilterWriter(BufferedWriter(OutputStreamWriter(stream))),
+class CSVWriter(stream: OutputStream, format: CSVFormat, private val headers: List<String>) : FilterWriter(BufferedWriter(OutputStreamWriter(stream))),
     CellConsumer {
     private val printer = CSVPrinter(this, format)
     private var currentRow: Int? = null
+    private var firstRow: Int = 0
     private var record = mutableListOf<String>()
 
     override fun accept(cell: XCLCell<*>) {
-        if ((currentRow ?: cell.address.row) != cell.address.row) {
+        if (currentRow == null) {
+            firstRow = cell.address.row
+            currentRow = cell.address.row
+        }
+        if (currentRow != cell.address.row) {
             printer.printRecord(record)
             record.clear()
         }
-        record+= cell.value.toString()
+        record += if (headers.isNotEmpty() && currentRow == firstRow) {
+            headers[cell.address.column]
+        } else {
+            cell.value.toString()
+        }
         currentRow = cell.address.row
     }
 
@@ -32,7 +41,8 @@ class CSVReader(
     stream: InputStream,
     private val format: CSVFormat,
     private val start: Address,
-    private val end: Address
+    private val end: Address?,
+    private val removeHeaders: Boolean
 ) : BufferedReader(InputStreamReader(stream)),
     CellProducer {
     override fun iterator(): Iterator<XCLCell<*>> {
@@ -40,7 +50,13 @@ class CSVReader(
             var col = 0
             record.asSequence().map { field -> XCLCell(Address(row, col++), XCLCellType.STRING, field) }
         }
-            .filter { cell -> cell.address.row >= start.row && cell.address.column >= start.column && cell.address.row <= end.row && cell.address.column <= end.column }
+            .filter { cell ->
+                cell.address.row >= start.row
+                        && cell.address.column >= start.column
+                        && cell.address.row <= (end?.row ?: Int.MAX_VALUE)
+                        && cell.address.column <= (end?.column ?: Int.MAX_VALUE)
+                        && (!removeHeaders || cell.address.row != start.row)
+            }
             .iterator()
     }
 }

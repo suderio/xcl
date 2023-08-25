@@ -21,8 +21,15 @@ import java.util.regex.Pattern
         # Takes an excel file and creates a csv file
         cat file.xlsx | xcl xl2csv >> result.csv
         
-        # Takes an csv file with fields separated by a semicolon and pipes to stdout
-        cat file.csv | xcl csv2xl --separator="\n" --delimiter=";" --sheet=tab02 >> result.xls
+        # Takes a csv file with fields separated by a semicolon and pipes to stdout
+        cat file.csv | xcl csv2xl --separator="\n" --delimiter=";" --sheet=tab02 >> result.xlsx
+        
+        # Takes an excel file and pipes to stdout only the first 3 columns
+        cat file.xlsx | xcl xl2xl "$1, $2, $3" >> result.xlsx
+        
+        # Subcommands can be repeated:
+        xcl xl2csv --in file.xlsx --out result.csv \
+            csv2xl --in file.csv --out result.xlsx
         
         """],
     scope = ScopeType.INHERIT,
@@ -33,15 +40,15 @@ import java.util.regex.Pattern
     showAtFileInUsageHelp = true,
     exitCodeOnSuccess = 0,
     exitCodeOnInvalidInput = 1,
+    subcommandsRepeatable = true,
     subcommands = [HelpCommand::class, CsvToExcelCommand::class, ExcelToCsvCommand::class, CsvToCsvCommand::class, ExcelToExcelCommand::class]
 )
 class MainCommand
 
 
-
 @Command(
     name = "csv2xl", description = [
-"""Creates a new excel file from the input. The input must
+        """Creates a new excel file from the input. The input must
 be a csv file, although its format is fully configurable.
 The default configurations is a modified RFC 4180 that
 works well with Excel csv files.
@@ -54,10 +61,20 @@ class CsvToExcelCommand : Runnable {
     @Option(names = ["-i", "--in"], description = ["input file"])
     var inputFile: File? = null
 
-    @Option(names = ["--inStartCell"], description = ["Starting cell in the RnCn format"], defaultValue = "R1C1", converter = [AddressConverter::class])
+    @Option(
+        names = ["--inStartCell"],
+        description = ["Starting cell in the RnCn format"],
+        defaultValue = "R1C1",
+        converter = [AddressConverter::class]
+    )
     lateinit var inStartCell: Address
 
-    @Option(names = ["--inEndCell"], description = ["End cell in the RnCn format"], defaultValue = "", converter = [AddressConverter::class])
+    @Option(
+        names = ["--inEndCell"],
+        description = ["End cell in the RnCn format"],
+        defaultValue = "",
+        converter = [AddressConverter::class]
+    )
     lateinit var inEndCell: Address
 
     @Option(
@@ -94,6 +111,28 @@ class CsvToExcelCommand : Runnable {
     )
     lateinit var outStartCell: Address
 
+    @ArgGroup(exclusive = true)
+    lateinit var headersOptions: HeadersOptions
+
+    class HeadersOptions {
+        @Option(
+            names = ["--headers"],
+            paramLabel = "New headers",
+            description = ["The new headers in the out file"],
+            defaultValue = "",
+            showDefaultValue = ALWAYS
+        )
+        lateinit var headers: List<String>
+
+        @Option(
+            names = ["-removeHeaders"], paramLabel = "Remove headers",
+            description = ["Remove the headers in the out file"],
+            defaultValue = "false",
+            showDefaultValue = ALWAYS
+        )
+        var removeHeaders = false
+    }
+
     @Parameters(paramLabel = "columns", description = ["Your output columns"], arity = "0..*")
     var columns: List<String>? = null
 
@@ -102,8 +141,8 @@ class CsvToExcelCommand : Runnable {
         log.info("input file: ${inputFile ?: "stdin"}")
         log.info("output file: ${outputFile ?: "stdout"}")
         repl(
-            inCSVStream(inputFile, delimiter, separator, inStartCell, inEndCell),
-            outExcelStream(outputFile, sheet, outStartCell),
+            inCSVStream(inputFile, delimiter, separator, inStartCell, inEndCell, headersOptions.removeHeaders),
+            outExcelStream(outputFile, sheet, outStartCell, headersOptions.headers),
             columns ?: emptyList()
         )
     }
@@ -112,7 +151,7 @@ class CsvToExcelCommand : Runnable {
 
 @Command(
     name = "xl2csv", description = [
-"""Creates a new csv file from the input. The input must
+        """Creates a new csv file from the input. The input must
 be an excel file. The default csv format is a modified
 RFC 4180 similar to Excel csv files.
 """]
@@ -128,10 +167,20 @@ class ExcelToCsvCommand : Runnable {
     @Option(names = ["--sheet"], description = ["Name of the sheet"], defaultValue = "Sheet1")
     lateinit var sheet: String
 
-    @Option(names = ["--inStartCell"], description = ["Starting cell in the RnCn format"], defaultValue = "R1C1", converter = [AddressConverter::class])
+    @Option(
+        names = ["--inStartCell"],
+        description = ["Starting cell in the RnCn format"],
+        defaultValue = "R1C1",
+        converter = [AddressConverter::class]
+    )
     lateinit var inStartCell: Address
 
-    @Option(names = ["--inEndCell"], description = ["End cell in the RnCn format"], defaultValue = "", converter = [AddressConverter::class])
+    @Option(
+        names = ["--inEndCell"],
+        description = ["End cell in the RnCn format"],
+        defaultValue = "",
+        converter = [AddressConverter::class]
+    )
     lateinit var inEndCell: Address
 
     @Option(names = ["-o", "--out"], description = ["output file"])
@@ -143,6 +192,28 @@ class ExcelToCsvCommand : Runnable {
     @Option(names = ["-s", "--separator"], description = ["CSV record separator"], defaultValue = "\r\n")
     lateinit var separator: String
 
+    @ArgGroup(exclusive = true)
+    lateinit var headersOptions: HeadersOptions
+
+    class HeadersOptions {
+        @Option(
+            names = ["--headers"],
+            paramLabel = "New headers",
+            description = ["The new headers in the out file"],
+            defaultValue = "",
+            showDefaultValue = ALWAYS
+        )
+        lateinit var headers: List<String>
+
+        @Option(
+            names = ["-removeHeaders"], paramLabel = "Remove headers",
+            description = ["Remove the headers in the out file"],
+            defaultValue = "false",
+            showDefaultValue = ALWAYS
+        )
+        var removeHeaders = false
+    }
+
     @Parameters(paramLabel = "columns", description = ["Your output columns"], arity = "0..*")
     var columns: List<String>? = null
 
@@ -151,8 +222,8 @@ class ExcelToCsvCommand : Runnable {
         log.info("input file: ${inputFile ?: "stdin"}")
         log.info("output file: ${outputFile ?: "stdout"}")
         repl(
-            inExcelStream(inputFile, sheet, inStartCell, inEndCell),
-            outCSVStream(outputFile, delimiter, separator),
+            inExcelStream(inputFile, sheet, inStartCell, inEndCell, headersOptions.removeHeaders),
+            outCSVStream(outputFile, delimiter, separator, headersOptions.headers),
             columns ?: emptyList()
         )
     }
@@ -161,7 +232,7 @@ class ExcelToCsvCommand : Runnable {
 @Command(
     name = "csv2csv",
     description = [
-"""Creates a new csv file from the input. The input must
+        """Creates a new csv file from the input. The input must
 be a csv file, although the input and output formats are
 fully configurable. The default configurations is a 
 modified RFC 4180 that is similar to Excel csv files.
@@ -175,10 +246,20 @@ class CsvToCsvCommand : Runnable {
     @Option(names = ["-i", "--in"], description = ["input file"])
     var inputFile: File? = null
 
-    @Option(names = ["--inStartCell"], description = ["Starting cell in the RnCn format"], defaultValue = "R1C1", converter = [AddressConverter::class])
+    @Option(
+        names = ["--inStartCell"],
+        description = ["Starting cell in the RnCn format"],
+        defaultValue = "R1C1",
+        converter = [AddressConverter::class]
+    )
     lateinit var inStartCell: Address
 
-    @Option(names = ["--inEndCell"], description = ["End cell in the RnCn format"], defaultValue = "", converter = [AddressConverter::class])
+    @Option(
+        names = ["--inEndCell"],
+        description = ["End cell in the RnCn format"],
+        defaultValue = "",
+        converter = [AddressConverter::class]
+    )
     lateinit var inEndCell: Address
 
     @Option(names = ["-d", "--inDelimiter"], description = ["CSV field delimiter"], defaultValue = ",")
@@ -196,6 +277,28 @@ class CsvToCsvCommand : Runnable {
     @Option(names = ["-t", "--outSeparator"], description = ["CSV record separator"], defaultValue = "\r\n")
     lateinit var outSeparator: String
 
+    @ArgGroup(exclusive = true)
+    lateinit var headersOptions: HeadersOptions
+
+    class HeadersOptions {
+        @Option(
+            names = ["--headers"],
+            paramLabel = "New headers",
+            description = ["The new headers in the out file"],
+            defaultValue = "",
+            showDefaultValue = ALWAYS
+        )
+        lateinit var headers: List<String>
+
+        @Option(
+            names = ["-removeHeaders"], paramLabel = "Remove headers",
+            description = ["Remove the headers in the out file"],
+            defaultValue = "false",
+            showDefaultValue = ALWAYS
+        )
+        var removeHeaders = false
+    }
+
     @Parameters(paramLabel = "columns", description = ["Your output columns"], arity = "0..*")
     var columns: List<String>? = null
 
@@ -203,8 +306,8 @@ class CsvToCsvCommand : Runnable {
         log.info("input file: ${inputFile ?: "stdin"}")
         log.info("output file: ${outputFile ?: "stdout"}")
         repl(
-            inCSVStream(inputFile, inDelimiter, inSeparator, inStartCell, inEndCell),
-            outCSVStream(outputFile, outDelimiter, outSeparator),
+            inCSVStream(inputFile, inDelimiter, inSeparator, inStartCell, inEndCell, headersOptions.removeHeaders),
+            outCSVStream(outputFile, outDelimiter, outSeparator, headersOptions.headers),
             columns ?: emptyList()
         )
     }
@@ -213,7 +316,7 @@ class CsvToCsvCommand : Runnable {
 @Command(
     name = "xl2xl",
     description = [
-"""Creates a new excel file from the input. The input must
+        """Creates a new excel file from the input. The input must
 be another excel file.
 """],
 )
@@ -228,17 +331,54 @@ class ExcelToExcelCommand : Runnable {
     @Option(names = ["--sheet"], description = ["Name of the sheet"], defaultValue = "Sheet1")
     lateinit var sheet: String
 
-    @Option(names = ["--inStartCell"], description = ["Starting cell in the RnCn format"], defaultValue = "R1C1", converter = [AddressConverter::class])
+    @Option(
+        names = ["--inStartCell"],
+        description = ["Starting cell in the RnCn format"],
+        defaultValue = "R1C1",
+        converter = [AddressConverter::class]
+    )
     lateinit var inStartCell: Address
 
-    @Option(names = ["--inEndCell"], description = ["End cell in the RnCn format"], defaultValue = "", converter = [AddressConverter::class])
+    @Option(
+        names = ["--inEndCell"],
+        description = ["End cell in the RnCn format"],
+        defaultValue = "",
+        converter = [AddressConverter::class]
+    )
     lateinit var inEndCell: Address
 
     @Option(names = ["-o", "--out"], description = ["output file"])
     var outputFile: File? = null
 
-    @Option(names = ["--outStartCell"], description = ["Starting cell in the RnCn format"], defaultValue = "R1C1", converter = [AddressConverter::class])
+    @Option(
+        names = ["--outStartCell"],
+        description = ["Starting cell in the RnCn format"],
+        defaultValue = "R1C1",
+        converter = [AddressConverter::class]
+    )
     lateinit var outStartCell: Address
+
+    @ArgGroup(exclusive = true)
+    lateinit var headersOptions: HeadersOptions
+
+    class HeadersOptions {
+        @Option(
+            names = ["--headers"],
+            paramLabel = "New headers",
+            description = ["The new headers in the out file"],
+            defaultValue = "",
+            showDefaultValue = ALWAYS
+        )
+        lateinit var headers: List<String>
+
+        @Option(
+            names = ["-removeHeaders"], paramLabel = "Remove headers",
+            description = ["Remove the headers in the out file"],
+            defaultValue = "false",
+            showDefaultValue = ALWAYS
+        )
+        var removeHeaders = false
+    }
 
     @Parameters(paramLabel = "columns", description = ["Your output columns"], arity = "0..*")
     var columns: List<String>? = null
@@ -248,8 +388,8 @@ class ExcelToExcelCommand : Runnable {
         log.info("input file: ${inputFile ?: "stdin"}")
         log.info("output file: ${outputFile ?: "stdout"}")
         repl(
-            inExcelStream(inputFile, sheet, inStartCell, inEndCell),
-            outExcelStream(outputFile, sheet, outStartCell),
+            inExcelStream(inputFile, sheet, inStartCell, inEndCell, headersOptions.removeHeaders),
+            outExcelStream(outputFile, sheet, outStartCell, headersOptions.headers),
             columns ?: emptyList()
         )
     }
@@ -261,11 +401,11 @@ class AddressConverter : ITypeConverter<Address?> {
         if (address?.isNotBlank() == true && r1c1Pattern.matcher(address).matches()) {
             val result = address.split('r', 'c', ignoreCase = true, limit = 0)
                 .map(String::toInt)
-                .filterIndexed {  i, _ -> i <= 1 }
-                //.map{i -> i - 1}
+                .filterIndexed { i, _ -> i <= 1 }
+            //.map{i -> i - 1}
             return Address(result[0], result[1])
         }
         return null
-     }
+    }
 
 }

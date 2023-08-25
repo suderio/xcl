@@ -2,6 +2,7 @@ package net.technearts.xcl
 
 import bsh.Interpreter
 import net.technearts.xcl.XCLCellType.*
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.*
 import java.util.regex.Pattern
@@ -52,10 +53,9 @@ class SheeterInterpreter : Interpreter() {
         val result = this.get("current")
         return XCLCell(
             Address(row, column), when (result) {
-                is Number -> NUMBER
                 is Boolean -> BOOLEAN
-                is Date -> DATE
-                is LocalDateTime -> DATE
+                is Number -> NUMBER
+                is Date, is LocalDate, is LocalDateTime -> DATE
                 else -> STRING
             }, result
         )

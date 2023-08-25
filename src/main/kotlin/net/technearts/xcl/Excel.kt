@@ -17,46 +17,59 @@ import java.util.function.Predicate
 class XSSFWorkbookWriter(
     private val stream: OutputStream,
     tab: String,
-    private val start: Address?
+    private val start: Address,
+    private val headers: List<String>
 ) : CellConsumer {
     private val workbook = SXSSFWorkbook()
     private val sheet = workbook.createSheet(tab)
     private val dateCellStyle = workbook.createCellStyle()
+
     init {
         dateCellStyle.dataFormat = workbook.creationHelper.createDataFormat().getFormat("dd/mm/yyyy")
     }
 
     override fun accept(cell: XCLCell<*>) {
-        val c = sheet.row(cell.address.row).cell(cell.address.column)
+        val xCell = sheet.row(cell.address.row + start.row).cell(cell.address.column + start.column)
+        if (headers.isNotEmpty() && cell.address.row == 0) {
+            xCell.setCellValue(headers[cell.address.column])
+            xCell.cellType = CellType.STRING
+            return
+        }
         when (cell.type) {
             XCLCellType.NUMBER -> {
-                c.setCellValue(cell.value as Double)
-                c.cellType = CellType.NUMERIC
+                xCell.setCellValue(cell.value as Double)
+                xCell.cellType = CellType.NUMERIC
             }
+
             XCLCellType.STRING -> {
-                c.setCellValue(cell.value as String)
-                c.cellType = CellType.STRING
+                xCell.setCellValue(cell.value as String)
+                xCell.cellType = CellType.STRING
             }
+
             XCLCellType.DATE -> {
-                c.setCellValue(cell.value as LocalDateTime)
-                c.cellType = CellType.NUMERIC
-                c.cellStyle = dateCellStyle
+                xCell.setCellValue(cell.value as LocalDateTime)
+                xCell.cellType = CellType.NUMERIC
+                xCell.cellStyle = dateCellStyle
             }
+
             XCLCellType.FORMULA -> {
-                c.setCellValue(cell.value as String)
-                c.cellType = CellType.FORMULA
+                xCell.setCellValue(cell.value as String)
+                xCell.cellType = CellType.FORMULA
             }
+
             XCLCellType.ERROR -> {
-                c.setCellValue(cell.value as String)
-                c.cellType = CellType.ERROR
+                xCell.setCellValue(cell.value as String)
+                xCell.cellType = CellType.ERROR
             }
+
             XCLCellType.BOOLEAN -> {
-                c.setCellValue(cell.value as Boolean)
-                c.cellType = CellType.BOOLEAN
+                xCell.setCellValue(cell.value as Boolean)
+                xCell.cellType = CellType.BOOLEAN
             }
+
             XCLCellType.EMPTY -> {
-                c.setCellValue(cell.value as String)
-                c.cellType = CellType.BLANK
+                xCell.setCellValue(cell.value as String)
+                xCell.cellType = CellType.BLANK
             }
         }
     }
@@ -85,7 +98,8 @@ class XSSFWorkbookReader(
     private val stream: InputStream,
     tab: String,
     private val start: Address?,
-    private val end: Address?
+    private val end: Address?,
+    private val removeHeaders: Boolean
 ) : CellProducer {
     private val workbook = XSSFWorkbook(stream)
     private val sheet = workbook.getSheet(tab)
@@ -114,8 +128,13 @@ class XSSFWorkbookReader(
             }.iterator()
     }
 
-    private fun rowFilter(start: Address?, end: Address?): Predicate<Row> =
-        Predicate<Row> { row -> row.rowNum >= (start?.row ?: 0) && row.rowNum <= (end?.row ?: Int.MAX_VALUE) }
+    private fun rowFilter(start: Address?, end: Address?): Predicate<Row> {
+        return Predicate<Row> { row ->
+            (row.rowNum >= (start?.row ?: 0)
+                    && row.rowNum <= (end?.row ?: Int.MAX_VALUE)
+                    && (!removeHeaders || row.rowNum != (start?.row ?: 0)))
+        }
+    }
 
     private fun columnFilter(start: Address?, end: Address?): Predicate<Cell> =
         Predicate<Cell> { cell ->
